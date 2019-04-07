@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Address (
     org_id           INTEGER     NOT NULL COMMENT 'Уникальный идентификатор организации',
     off_id           INTEGER     NOT NULL COMMENT 'Уникальный идентификатор офиса',
     version          INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
-    address          VARCHAR(50) NOT NULL COMMENT 'Адрес организации (при org_id = 1) / офиса',
+    address          VARCHAR(50) NOT NULL COMMENT 'Адрес организации (при off_id = 1) / офиса',
     is_active        BOOLEAN     NOT NULL,
     PRIMARY KEY (org_id, off_id),
 );
@@ -94,7 +94,6 @@ CREATE INDEX IX_Doc_Code ON Doc(code);
 CREATE TABLE IF NOT EXISTS Country (
     code            VARCHAR(3)  NOT NULL COMMENT 'Код страны',
     name            VARCHAR(50) NOT NULL COMMENT 'Наименование страны',
-
     PRIMARY KEY (code),
 );
 COMMENT ON TABLE Country IS 'Страна мира';
