@@ -6,7 +6,7 @@ VALUES (2, 0, 'Россия, г. Владивосток, ул. Приморск�
 INSERT INTO Address (id, version, address)
 VALUES (3, 0, 'Россия, г. Москва, ул. Заречная, 1');
 INSERT INTO Address (id, version, address)
-VALUES (4, 0, 'Китай, г. Шанхай, ул. Цзуй Цзинь, 8');
+VALUES (4, 0, 'Китай, г. Шанхай, ул. Пиньинь, 8');
 
 /* Организация */
 INSERT INTO Organization (id, version, address_id, name, full_name, inn, kpp, is_active)
@@ -22,15 +22,15 @@ VALUES (2, 0, 1, 2, 'Производственный центр', true);
 INSERT INTO Office (id, version, org_id, address_id, name, is_active)
 VALUES (3, 0, 2, 3, 'Штаб-квартира', true);
 INSERT INTO Office (id, version, org_id, address_id, name, is_active)
-VALUES (4, 0, 2, 4, 'Филиал г. Шанхай, ул. Пиньинь', true);
+VALUES (4, 0, 2, 4, 'Филиал г. Шанхай', true);
 
-/* Документ */
-INSERT INTO Document (id, code, name)
+/* Классификатор документов */
+INSERT INTO Document_Type (id, code, name)
 VALUES (4, '10', 'Паспорт иностранного гражданина');
-INSERT INTO Document (id, code, name)
+INSERT INTO Document_Type (id, code, name)
 VALUES (10, '21', 'Паспорт гражданина Российской Федерации');
 
-/* Страна */
+/* Классификатор стран */
 INSERT INTO Country (id, code, name)
 VALUES (34, '112', 'Республика Беларусь');
 INSERT INTO Country (id, code, name)
@@ -41,34 +41,58 @@ INSERT INTO Country (id, code, name)
 VALUES (199, '688', 'Республика Сербия');
 
 /* Пользователь */
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (1, 0, 1, 185, 10, 'Федор', 'Николаевич', 'Прокофьев', 'Генеральный директор', '422898333', '2010-01-20', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (2, 0, 1, 185, 10, 'Дмитрий', 'Игоревич', 'Иванов', 'Технический директор', '94738934', '2003-01-20', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (3, 0, 1, 185, 10, 'Вера', 'Александровна', 'Кузнецова', 'Разработчик', '2802154125', '2009-01-30', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (4, 0, 1, 199, 10, 'Владислав', 'Владиславович', 'Стоянович', 'Научный сотрудник', '2424242154', '2005-01-20', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (5, 0, 1, 34, 4, 'Владимир', 'Константинович', 'Константиновский', 'Программист', '235354366', '2009-01-20', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (6, 0, 2, 185, 10, 'Никита', 'Алексеевич', 'Дмитриев', 'Главный инженер', '122354777836', '2014-05-20', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (7, 0, 2, 185, 10, 'Илья', 'Кузьмич', 'Федоров', 'Слесарь', '25625736526', '2009-01-20', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (8, 0, 2, 185, 10, 'Мария', 'Ивановна', 'Сидоренко', 'Заведующая складом', '242245621', '2010-05-25', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (9, 0, 3, 185, 10, 'Иван', 'Петрович', 'Сидоров', 'Генеральный директор', '475465553', '2000-08-17', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (10, 0, 3, 185, 10, 'Ирина', 'Владимировна', 'Карандашева', 'Секретарь', '54091759475', '2002-02-22', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, middle_name, position, doc_number, doc_date, is_identified)
-VALUES (11, 0, 3, 185, 10, 'Михал', 'Павлович', 'Крылов', 'Менеджер', '290759076', '2004-11-09', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, position, is_identified)
-VALUES (12, 0, 4, 44, 4, 'Цзиньхуа', 'Ху', 'Технолог', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, position, is_identified)
-VALUES (13, 0, 4, 44, 4, 'Вэйдун', 'Ли', 'Инженер', true);
-INSERT INTO User (id, version, office_id, country_id, doc_id, first_name, second_name, position, is_identified)
-VALUES (14, 0, 4, 44, 4, 'Цзиньсун', 'Чжан', 'Механик', true);
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (1, 0, 1, 185, 'Федор', 'Николаевич', 'Прокофьев', 'Генеральный директор');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (2, 0, 1, 185, 'Дмитрий', 'Игоревич', 'Иванов', 'Технический директор');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (3, 0, 1, 185, 'Вера', 'Александровна', 'Кузнецова', 'Разработчик');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (4, 0, 1, 199, 'Владислав', 'Владиславович', 'Стоянович', 'Научный сотрудник');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (5, 0, 1, 34, 'Владимир', 'Константинович', 'Константиновский', 'Программист');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (6, 0, 2, 185, 'Никита', 'Алексеевич', 'Дмитриев', 'Главный инженер');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (7, 0, 2, 185, 'Илья', 'Кузьмич', 'Федоров', 'Слесарь');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (8, 0, 2, 185, 'Мария', 'Ивановна', 'Сидоренко', 'Заведующая складом');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (9, 0, 3, 185, 'Иван', 'Петрович', 'Сидоров', 'Генеральный директор');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (10, 0, 3, 185, 'Ирина', 'Владимировна', 'Карандашева', 'Секретарь');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (11, 0, 3, 185, 'Михал', 'Павлович', 'Крылов', 'Менеджер');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (12, 0, 4, 44, 'Цзиньхуа', 'Ху', 'Технолог', true);
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (13, 0, 4, 44, 'Вэйдун', 'Ли', 'Инженер', true);
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+VALUES (14, 0, 4, 44, 'Цзиньсун', 'Чжан', 'Механик', true);
+
+/* Документ */
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (1, 0, 10, '422898333', '2010-01-20', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (2, 0, 10, '94738934', '2003-01-20', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (3, 0, 10, '2802154125', '2009-01-30', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (4, 0, 4, '2424242154', '2005-01-20', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (5, 0, 4, '235354366', '2009-01-20', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (6, 0, 10, '122354777836', '2014-05-20', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (7, 0, 10, '25625736526', '2009-01-20', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (8, 0, 10, '242245621', '2010-05-25', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (9, 0, 10, '475465553', '2000-08-17', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (10, 0, 10, '54091759475', '2002-02-22', true);
+INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
+VALUES (11, 0, 10, '290759076', '2004-11-09', true);
 
 /* Телефон */
 INSERT INTO Phone (id, version, phone)
