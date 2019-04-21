@@ -12,7 +12,8 @@ public class OfficeView {
     private String phone;
     private boolean isActive;
 
-    public OfficeView(long id, long orgId, String name, String address, String phone, boolean isActive) {
+    public OfficeView(long id, long orgId, String name,
+                      String address, String phone, boolean isActive) {
         this.id = id;
         this.orgId = orgId;
         this.name = name;

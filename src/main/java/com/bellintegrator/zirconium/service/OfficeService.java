@@ -20,18 +20,22 @@ public interface OfficeService {
      * Получить офис с заданным идентификатором
      * @param id уникальный идентификатор офиса
      * @return офис
+     * @throws java.util.NoSuchElementException если не существует
+     *         офиса с саданным идентификатором
      */
     OfficeView office(long id);
 
     /**
      * Обновить сведения об офисе
      * @param office офис
+     * @throws java.util.NoSuchElementException если не существует
+     *         офиса с саданным идентификатором
      */
-    public void update(OfficeView office);
+    void update(OfficeView office);
 
     /**
      * Добавить новый офис
      * @param office офис
      */
-    public void save(OfficeView office);
+    void save(OfficeView office);
 }
