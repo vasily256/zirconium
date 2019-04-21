@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -27,9 +28,14 @@ public class OfficeControllerTests {
 	@LocalServerPort
 	private int port;
 
-	private TestRestTemplate restTemplate = new TestRestTemplate();
-	private HttpHeaders headers = new HttpHeaders();
-	private Gson gson = new Gson();
+	@Autowired
+	private TestRestTemplate restTemplate;
+
+	@Autowired
+	private HttpHeaders headers;
+
+	@Autowired
+	private Gson gson;
 
 	private OfficeView office = new OfficeView(
 			2,

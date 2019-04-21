@@ -1,16 +1,29 @@
 package com.bellintegrator.zirconium;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import com.google.gson.Gson;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@Configuration
+@EnableAutoConfiguration
 public class ZirconiumApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+    @Bean
+    public TestRestTemplate testRestTemplate() {
+        return new TestRestTemplate();
+    }
+
+    @Bean
+    public HttpHeaders httpHeaders() {
+        return new HttpHeaders();
+    }
+
+    @Bean
+    public Gson gson() {
+        return new Gson();
+    }
 
 }
