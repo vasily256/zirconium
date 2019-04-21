@@ -70,9 +70,10 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public void save(OfficeView office) {
+    public long save(OfficeView office) {
         long id = counter.incrementAndGet();
         office.setId(id);
         offices.putIfAbsent(id, office);
+        return id;
     }
 }

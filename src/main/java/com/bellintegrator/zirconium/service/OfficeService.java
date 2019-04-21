@@ -36,6 +36,7 @@ public interface OfficeService {
     /**
      * Добавить новый офис
      * @param office офис
+     * @return уникальный идентификатор нового офиса
      */
-    void save(OfficeView office);
+    long save(OfficeView office);
 }

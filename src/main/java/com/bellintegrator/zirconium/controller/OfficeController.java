@@ -1,10 +1,13 @@
 package com.bellintegrator.zirconium.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.bellintegrator.zirconium.view.OfficeView;
 import com.bellintegrator.zirconium.service.OfficeService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Collection;
 
 /**
@@ -55,7 +58,11 @@ public class OfficeController {
      * @param office офис
      */
     @PostMapping("/save")
-    public void save(@RequestBody OfficeView office) {
-        officeService.save(office);
+    public ResponseEntity<Void> save(@RequestBody OfficeView office) {
+        long id = officeService.save(office);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
+            "/{id}").buildAndExpand(id).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 }
