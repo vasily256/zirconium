@@ -1,6 +1,7 @@
 package com.bellintegrator.zirconium.view;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OfficeView {
@@ -42,6 +43,7 @@ public class OfficeView {
         return phone;
     }
 
+    @JsonProperty("isActive") // предотвращение произвольного переименования поля в ответе
     public boolean isActive() {
         return isActive;
     }
