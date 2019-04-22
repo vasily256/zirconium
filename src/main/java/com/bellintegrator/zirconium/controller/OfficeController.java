@@ -10,6 +10,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.Collection;
 
+import static com.bellintegrator.zirconium.controller.SuccessResponseBody.*;
+
 /**
  * Контроллер офисов
  */
@@ -47,22 +49,26 @@ public class OfficeController {
     /**
      * Обновить сведения об офисе
      * @param office офис
+     * @return ответ на запрос
      */
     @PostMapping("/update")
-    public void update(@RequestBody OfficeView office) {
+    public ResponseEntity<?> update(@RequestBody OfficeView office) {
         officeService.update(office);
+
+        return ResponseEntity.ok(SUCCESS_RESPONSE_BODY);
     }
 
     /**
      * Добавить новый офис
      * @param office офис
+     * @return ответ на запрос
      */
     @PostMapping("/save")
-    public ResponseEntity<Void> save(@RequestBody OfficeView office) {
+    public ResponseEntity<?> save(@RequestBody OfficeView office) {
         long id = officeService.save(office);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
             "/{id}").buildAndExpand(id).toUri();
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(SUCCESS_RESPONSE_BODY);
     }
 }
