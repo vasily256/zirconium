@@ -23,14 +23,14 @@ public class JSONResponseWrapper implements ResponseBodyAdvice {
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
 
-        if (body instanceof SuccessResponseBody) {
+        if (body instanceof ResponseBodyMarker) {
             return body;
         }
 
         return new Wrapper<>(body);
     }
 
-    private class Wrapper<T> {
+    public static class Wrapper<T> {
         private final T data;
 
         public Wrapper(T o) {

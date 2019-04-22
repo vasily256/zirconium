@@ -47,7 +47,7 @@ public class OfficeServiceImpl implements OfficeService {
     public OfficeView office(long id) {
         OfficeView office = offices.get(id);
         if (office == null) {
-            throw new NoSuchElementException("office id " + id + " not found");
+            throw new EntityNotFoundException("office id " + id + " not found");
         }
         return offices.get(id);
     }
@@ -60,7 +60,7 @@ public class OfficeServiceImpl implements OfficeService {
     public void update(OfficeView office) {
         long id = office.getId();
         if (!offices.containsKey(id)) {
-            throw new NoSuchElementException("office id " + id + " not found");
+            throw new EntityNotFoundException("can't update: office id " + id + " not found");
         }
         offices.put(id, office);
     }

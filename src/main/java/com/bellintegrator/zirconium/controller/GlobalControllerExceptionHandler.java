@@ -1,21 +1,24 @@
 package com.bellintegrator.zirconium.controller;
 
+import com.bellintegrator.zirconium.service.impl.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.NoSuchElementException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
  * Обработчик исключений для формирования
  * соответствующих ответов сервера
  */
 @ControllerAdvice
-public class GlobalControllerExceptionHandler {
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoSuchElementException.class)
-    public void handleConflict() {
-        /* NOP */
+public class GlobalControllerExceptionHandler
+        extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    protected ResponseEntity<?> handleException(RuntimeException ex) {
+
+        ErrorResponseBody body = new ErrorResponseBody(ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 }

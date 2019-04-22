@@ -1,6 +1,6 @@
 package com.bellintegrator.zirconium.controller;
 
-public class SuccessResponseBody {
+public class SuccessResponseBody implements ResponseBodyMarker {
 
     public static final SuccessResponseBody SUCCESS_RESPONSE_BODY
             = new SuccessResponseBody();
