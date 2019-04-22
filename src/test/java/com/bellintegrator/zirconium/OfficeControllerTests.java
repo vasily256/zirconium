@@ -1,5 +1,6 @@
 package com.bellintegrator.zirconium;
 
+import com.bellintegrator.zirconium.controller.ErrorResponseBody;
 import com.bellintegrator.zirconium.controller.JSONResponseWrapper;
 import com.bellintegrator.zirconium.view.OfficeView;
 import com.google.gson.Gson;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.bellintegrator.zirconium.controller.SuccessResponseBody.SUCCESS_RESPONSE_BODY;
 import static junit.framework.TestCase.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -47,8 +49,9 @@ public class OfficeControllerTests {
 			true
 	);
 
+	// Сохранение офиса id 2 (в фейковом сервисисе также хранится офис id 1)
 	@Test
-	public void testAddOffice() {
+	public void testAddOffice() throws JSONException {
 		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
@@ -57,10 +60,12 @@ public class OfficeControllerTests {
 		String location = response.getHeaders().get(HttpHeaders.LOCATION).get(0);
 
 		assertTrue(location.contains("/2"));
+		JSONAssert.assertEquals(gson.toJson(SUCCESS_RESPONSE_BODY), response.getBody(), false);
 	}
 
+	// Запрос данных об офисе id 2
 	@Test
-	public void testGetOffice() throws JSONException {
+	public void testGetOffice1() throws JSONException {
 		HttpEntity<OfficeView> entity = new HttpEntity<>(null, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
@@ -69,17 +74,48 @@ public class OfficeControllerTests {
 		JSONAssert.assertEquals(gson.toJson(wrap(office)), response.getBody(), false);
 	}
 
+	// Попытка запроса данных о несуществующем офисе id 3
 	@Test
-	public void testUpdateOffice() throws JSONException {
+	public void testGetOffice2() throws JSONException {
+		HttpEntity<OfficeView> entity = new HttpEntity<>(null, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/3"), HttpMethod.GET, entity, String.class);
+
+		ErrorResponseBody errorResponseBody = new ErrorResponseBody("office id 3 not found");
+
+		JSONAssert.assertEquals(gson.toJson(errorResponseBody), response.getBody(), false);
+	}
+
+	// Обновление сведений об офисе id 2
+	@Test
+	public void testUpdateOffice1() throws JSONException {
         office.setAddress("г. Москва, Рублёвское ш., д. 29");
 		office.setPhone("74994445840");
 
 		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
 
-		restTemplate.exchange(
+		ResponseEntity<String> response = restTemplate.exchange(
 				createURLWithPort("/update"), HttpMethod.POST, entity, String.class);
 
-        testGetOffice();
+		JSONAssert.assertEquals(gson.toJson(SUCCESS_RESPONSE_BODY), response.getBody(), false);
+	}
+
+	// Попытка обновления сведений о несуществующем офисе id 3
+	@Test
+	public void testUpdateOffice2() throws JSONException {
+		office.setId(3);
+		office.setAddress("г. Москва, Рублёвское ш., д. 29");
+		office.setPhone("74994445840");
+
+		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/update"), HttpMethod.POST, entity, String.class);
+
+		ErrorResponseBody errorResponseBody = new ErrorResponseBody("can't update: office id 3 not found");
+
+		JSONAssert.assertEquals(gson.toJson(errorResponseBody), response.getBody(), false);
 	}
 
 	private String createURLWithPort(String uri) {
