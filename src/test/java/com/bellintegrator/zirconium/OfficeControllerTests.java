@@ -1,5 +1,6 @@
 package com.bellintegrator.zirconium;
 
+import com.bellintegrator.zirconium.controller.JSONResponseWrapper;
 import com.bellintegrator.zirconium.view.OfficeView;
 import com.google.gson.Gson;
 import org.json.JSONException;
@@ -65,7 +66,7 @@ public class OfficeControllerTests {
 		ResponseEntity<String> response = restTemplate.exchange(
 				createURLWithPort("/2"), HttpMethod.GET, entity, String.class);
 
-		JSONAssert.assertEquals(gson.toJson(office), response.getBody(), false);
+		JSONAssert.assertEquals(gson.toJson(wrap(office)), response.getBody(), false);
 	}
 
 	@Test
@@ -83,5 +84,9 @@ public class OfficeControllerTests {
 
 	private String createURLWithPort(String uri) {
 		return "http://localhost:" + port + "/api/office" + uri;
+	}
+
+	private <T> JSONResponseWrapper.Wrapper wrap(T o) {
+	    return new JSONResponseWrapper.Wrapper<>(o);
 	}
 }
