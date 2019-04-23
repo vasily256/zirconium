@@ -20,6 +20,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.bellintegrator.zirconium.controller.SuccessResponseBody.SUCCESS_RESPONSE_BODY;
 import static junit.framework.TestCase.assertTrue;
 
@@ -85,6 +88,29 @@ public class OfficeControllerTests {
 		ErrorResponseBody errorResponseBody = new ErrorResponseBody("office id 3 not found");
 
 		JSONAssert.assertEquals(gson.toJson(errorResponseBody), response.getBody(), false);
+	}
+
+	// Запрос списка офисов
+    @Test
+	public void testListOffice() throws JSONException {
+		OfficeView office2 = new OfficeView(
+				1,
+				1,
+				"Исследовательский центр",
+				"г. Москва, ул. Вербная, д. 5",
+				"74957870544",
+				true
+		);
+
+		List<OfficeView> list = new ArrayList<>();
+		list.add(office);
+		list.add(office2);
+
+		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/list"), HttpMethod.POST, entity, String.class);
+
+		JSONAssert.assertEquals(gson.toJson(wrap(list)), response.getBody(), false);
 	}
 
 	// Обновление сведений об офисе id 2
