@@ -1,5 +1,6 @@
 package com.bellintegrator.zirconium.service.impl;
 
+import com.bellintegrator.zirconium.exception.EntityNotFoundException;
 import com.bellintegrator.zirconium.service.OfficeService;
 import com.bellintegrator.zirconium.view.OfficeView;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.bellintegrator.zirconium.controller;
 
-import com.bellintegrator.zirconium.service.impl.EntityNotFoundException;
+import com.bellintegrator.zirconium.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

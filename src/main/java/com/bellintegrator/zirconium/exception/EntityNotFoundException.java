@@ -1,4 +1,4 @@
-package com.bellintegrator.zirconium.service.impl;
+package com.bellintegrator.zirconium.exception;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {
