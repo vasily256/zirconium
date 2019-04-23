@@ -43,7 +43,7 @@ public class OfficeControllerTests {
 	@Autowired
 	private Gson gson;
 
-	private OfficeView office = new OfficeView(
+	static OfficeView office = new OfficeView(
 			2,
 			1,
 			"Отдел тестирования",
@@ -148,7 +148,7 @@ public class OfficeControllerTests {
 		return "http://localhost:" + port + "/api/office" + uri;
 	}
 
-	private <T> JSONResponseWrapper.Wrapper wrap(T o) {
+	static <T> JSONResponseWrapper.Wrapper wrap(T o) {
 	    return new JSONResponseWrapper.Wrapper<>(o);
 	}
 }
