@@ -1,8 +1,9 @@
-package com.bellintegrator.zirconium.service.impl;
+package com.bellintegrator.zirconium.service;
 
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
-import com.bellintegrator.zirconium.service.ViewService;
 import com.bellintegrator.zirconium.view.OfficeView;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,11 +16,15 @@ import java.util.concurrent.atomic.AtomicLong;
 @Service
 public class ViewServiceImpl implements ViewService {
 
-    private final Map<Long, Object> offices = new HashMap<>();
+    private final Map<Long, Object> views = new HashMap<>();
     private final AtomicLong counter = new AtomicLong();
 
-    public ViewServiceImpl() {
-        OfficeView office = new OfficeView(
+    private final ObjectMapper objectMapper;
+
+    @Autowired
+    public ViewServiceImpl(ObjectMapper mapper) {
+        this.objectMapper = mapper;
+        OfficeView view = new OfficeView(
                 1,
                 1,
                 "Исследовательский центр",
@@ -28,7 +33,7 @@ public class ViewServiceImpl implements ViewService {
                 true
         );
 
-        save("office", office);
+        save("office", view);
     }
 
     /**
@@ -36,8 +41,9 @@ public class ViewServiceImpl implements ViewService {
      */
     @Override
     @Transactional
-    public Collection<?> list(String viewName, Object office) {
-        return offices.values(); // переменная office пока не использутся
+    public Collection<?> list(String viewName, Object view) {
+        view = deserialize(view);
+        return views.values(); // переменная view пока не использутся
     }
 
     /**
@@ -46,11 +52,11 @@ public class ViewServiceImpl implements ViewService {
     @Override
     @Transactional
     public Object get(String viewName, long id) {
-        Object office = offices.get(id);
-        if (office == null) {
+        Object view = views.get(id);
+        if (view == null) {
             throw new EntityNotFoundException("office id " + id + " not found");
         }
-        return offices.get(id);
+        return views.get(id);
     }
 
     /**
@@ -58,19 +64,13 @@ public class ViewServiceImpl implements ViewService {
      */
     @Override
     @Transactional
-    public void update(String viewName, Object office) {
-        long id = 0;
-        try {
-            id = ((OfficeView) office).getId();
-        } catch (Exception e) {
-            throw new RuntimeException(
-                "******" + office.getClass().getSimpleName() + "*******"
-            );
-        }
-        if (!offices.containsKey(id)) {
+    public void update(String viewName, Object view) {
+        view = deserialize(view);
+        long id = ((OfficeView) view).getId();
+        if (!views.containsKey(id)) {
             throw new EntityNotFoundException("can't update: office id " + id + " not found");
         }
-        offices.put(id, office);
+        views.put(id, view);
     }
 
     /**
@@ -78,10 +78,15 @@ public class ViewServiceImpl implements ViewService {
      */
     @Override
     @Transactional
-    public long save(String viewName, Object office) {
+    public long save(String viewName, Object view) {
+        view = deserialize(view);
         long id = counter.incrementAndGet();
-        ((OfficeView) office).setId(id);
-        offices.putIfAbsent(id, office);
+        ((OfficeView) view).setId(id);
+        views.putIfAbsent(id, view);
         return id;
+    }
+
+    private Object deserialize(Object json) {
+        return objectMapper.convertValue(json, OfficeView.class);
     }
 }
