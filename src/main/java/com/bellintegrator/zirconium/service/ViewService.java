@@ -1,20 +1,18 @@
 package com.bellintegrator.zirconium.service;
 
-import com.bellintegrator.zirconium.view.OfficeView;
-
 import java.util.Collection;
 
 /**
  * Сервис для получения, создания и обновления офисов
  */
-public interface OfficeService {
+public interface ViewService {
 
     /**
      * Получить список офисов по заданным критериям
-     * @param office - критерии отбора
+     * @param view - критерии отбора
      * @return список офисов
      */
-    Collection<OfficeView> list(OfficeView office);
+    Collection<?> list(String viewName, Object view);
 
     /**
      * Получить офис с заданным идентификатором
@@ -23,20 +21,20 @@ public interface OfficeService {
      * @throws java.util.NoSuchElementException если не существует
      *         офиса с саданным идентификатором
      */
-    OfficeView office(long id);
+    Object get(String viewName, long id);
 
     /**
      * Обновить сведения об офисе
-     * @param office офис
+     * @param view офис
      * @throws java.util.NoSuchElementException если не существует
      *         офиса с саданным идентификатором
      */
-    void update(OfficeView office);
+    void update(String viewName, Object view);
 
     /**
      * Добавить новый офис
-     * @param office офис
+     * @param view офис
      * @return уникальный идентификатор нового офиса
      */
-    long save(OfficeView office);
+    long save(String viewName, Object view);
 }

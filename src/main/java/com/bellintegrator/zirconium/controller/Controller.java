@@ -3,8 +3,7 @@ package com.bellintegrator.zirconium.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.bellintegrator.zirconium.view.OfficeView;
-import com.bellintegrator.zirconium.service.OfficeService;
+import com.bellintegrator.zirconium.service.ViewService;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -16,24 +15,24 @@ import static com.bellintegrator.zirconium.controller.SuccessResponseBody.*;
  * Контроллер офисов
  */
 @RestController
-@RequestMapping("/api/office")
-public class OfficeController {
+@RequestMapping("/api")
+public class Controller {
 
-    private final OfficeService officeService;
+    private final ViewService viewService;
 
     @Autowired
-    public OfficeController(OfficeService officeService) {
-        this.officeService = officeService;
+    public Controller(ViewService viewService) {
+        this.viewService = viewService;
     }
 
     /**
      * Получить список офисов по заданным критериям
-     * @param office - критерии отбора
+     * @param view - критерии отбора
      * @return список офисов
      */
-    @PostMapping("/list")
-    public Collection<OfficeView> list(@RequestBody OfficeView office) {
-        return officeService.list(office);
+    @PostMapping("/{viewName}/list")
+    public Collection<?> list(@PathVariable String viewName, @RequestBody Object view) {
+        return viewService.list(viewName, view);
     }
 
     /**
@@ -41,31 +40,31 @@ public class OfficeController {
      * @param id уникальный идентификатор офиса
      * @return офис
      */
-    @GetMapping(value = "/{id}")
-    public OfficeView office(@PathVariable long id) {
-        return officeService.office(id);
+    @GetMapping("/{viewName}/{id}")
+    public Object get(@PathVariable String viewName, @PathVariable long id) {
+        return viewService.get(viewName, id);
     }
 
     /**
      * Обновить сведения об офисе
-     * @param office офис
+     * @param view офис
      * @return ответ на запрос
      */
-    @PostMapping("/update")
-    public ResponseEntity<?> update(@RequestBody OfficeView office) {
-        officeService.update(office);
+    @PostMapping("/{viewName}/update")
+    public ResponseEntity<?> update(@PathVariable String viewName, @RequestBody Object view) {
+        viewService.update(viewName, view);
 
         return ResponseEntity.ok(SUCCESS_RESPONSE_BODY);
     }
 
     /**
      * Добавить новый офис
-     * @param office офис
+     * @param view офис
      * @return ответ на запрос
      */
-    @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody OfficeView office) {
-        long id = officeService.save(office);
+    @PostMapping("/{viewName}/save")
+    public ResponseEntity<?> save(@PathVariable String viewName, @RequestBody Object view) {
+        long id = viewService.save(viewName, view);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
             "/{id}").buildAndExpand(id).toUri();
 

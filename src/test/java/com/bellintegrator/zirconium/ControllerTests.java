@@ -29,7 +29,7 @@ import static junit.framework.TestCase.assertTrue;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class OfficeControllerTests {
+public class ControllerTests {
 
 	@LocalServerPort
 	private int port;

@@ -1,7 +1,7 @@
 package com.bellintegrator.zirconium.service.impl;
 
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
-import com.bellintegrator.zirconium.service.OfficeService;
+import com.bellintegrator.zirconium.service.ViewService;
 import com.bellintegrator.zirconium.view.OfficeView;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ import java.util.concurrent.atomic.AtomicLong;
  * Сервис для работы с mock-объектами офисов
  */
 @Service
-public class OfficeServiceImpl implements OfficeService {
+public class ViewServiceImpl implements ViewService {
 
-    private final Map<Long, OfficeView> offices = new HashMap<>();
+    private final Map<Long, Object> offices = new HashMap<>();
     private final AtomicLong counter = new AtomicLong();
 
-    public OfficeServiceImpl() {
+    public ViewServiceImpl() {
         OfficeView office = new OfficeView(
                 1,
                 1,
@@ -28,7 +28,7 @@ public class OfficeServiceImpl implements OfficeService {
                 true
         );
 
-        save(office);
+        save("office", office);
     }
 
     /**
@@ -36,7 +36,7 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public Collection<OfficeView> list(OfficeView office) {
+    public Collection<?> list(String viewName, Object office) {
         return offices.values(); // переменная office пока не использутся
     }
 
@@ -45,8 +45,8 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public OfficeView office(long id) {
-        OfficeView office = offices.get(id);
+    public Object get(String viewName, long id) {
+        Object office = offices.get(id);
         if (office == null) {
             throw new EntityNotFoundException("office id " + id + " not found");
         }
@@ -58,8 +58,15 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public void update(OfficeView office) {
-        long id = office.getId();
+    public void update(String viewName, Object office) {
+        long id = 0;
+        try {
+            id = ((OfficeView) office).getId();
+        } catch (Exception e) {
+            throw new RuntimeException(
+                "******" + office.getClass().getSimpleName() + "*******"
+            );
+        }
         if (!offices.containsKey(id)) {
             throw new EntityNotFoundException("can't update: office id " + id + " not found");
         }
@@ -71,9 +78,9 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public long save(OfficeView office) {
+    public long save(String viewName, Object office) {
         long id = counter.incrementAndGet();
-        office.setId(id);
+        ((OfficeView) office).setId(id);
         offices.putIfAbsent(id, office);
         return id;
     }
