@@ -21,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static com.bellintegrator.zirconium.controller.SuccessResponseBody.SUCCESS_RESPONSE_BODY;
@@ -48,7 +50,7 @@ public class ControllerTests {
 			1,
 			"Отдел тестирования",
 			"г. Москва, ул. Озёрная, д. 1",
-			"74957870538",
+			Arrays.asList("74957870538"),
 			true
 	);
 
@@ -98,7 +100,7 @@ public class ControllerTests {
 				1,
 				"Исследовательский центр",
 				"г. Москва, ул. Вербная, д. 5",
-				"74957870544",
+				Arrays.asList("74957870544", "74957870545"),
 				true
 		);
 
@@ -117,7 +119,7 @@ public class ControllerTests {
 	@Test
 	public void testUpdateOffice1() throws JSONException {
         office.setAddress("г. Москва, Рублёвское ш., д. 29");
-		office.setPhone("74994445840");
+		office.setPhone(Arrays.asList("74994445840", "74994445841"));
 
 		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
 
@@ -132,7 +134,7 @@ public class ControllerTests {
 	public void testUpdateOffice2() throws JSONException {
 		office.setId(3);
 		office.setAddress("г. Москва, Рублёвское ш., д. 29");
-		office.setPhone("74994445840");
+		office.setPhone(Arrays.asList("74994445840", "74994445841"));
 
 		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
 

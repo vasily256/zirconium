@@ -29,7 +29,7 @@ public class ViewServiceImpl implements ViewService {
                 1,
                 "Исследовательский центр",
                 "г. Москва, ул. Вербная, д. 5",
-                "74957870544",
+                Arrays.asList("74957870544", "74957870545"),
                 true
         );
 

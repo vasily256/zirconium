@@ -3,6 +3,8 @@ package com.bellintegrator.zirconium.view;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OfficeView {
 
@@ -10,11 +12,11 @@ public class OfficeView {
     private long orgId;
     private String name;
     private String address;
-    private String phone;
+    private List<String> phone;
     private boolean isActive;
 
     public OfficeView(long id, long orgId, String name,
-                      String address, String phone, boolean isActive) {
+                      String address, List<String> phone, boolean isActive) {
         this.id = id;
         this.orgId = orgId;
         this.name = name;
@@ -39,7 +41,7 @@ public class OfficeView {
         return address;
     }
 
-    public String getPhone() {
+    public List<String> getPhone() {
         return phone;
     }
 
@@ -64,7 +66,7 @@ public class OfficeView {
         this.address = address;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(List<String> phone) {
         this.phone = phone;
     }
 
