@@ -1,6 +1,7 @@
-package com.bellintegrator.zirconium.service;
+package com.bellintegrator.zirconium.service.content.impl;
 
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
+import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OfficeView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Сервис для работы с mock-объектами офисов
  */
-@Service
-public class ViewServiceImpl implements ViewService {
+@Service("office")
+public class OfficeService implements ContentService {
 
     private final Map<Long, Object> views = new HashMap<>();
     private final AtomicLong counter = new AtomicLong();
@@ -22,7 +23,7 @@ public class ViewServiceImpl implements ViewService {
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public ViewServiceImpl(ObjectMapper mapper) {
+    public OfficeService(ObjectMapper mapper) {
         this.objectMapper = mapper;
         OfficeView view = new OfficeView(
                 1,
@@ -33,7 +34,7 @@ public class ViewServiceImpl implements ViewService {
                 true
         );
 
-        save("office", view);
+        save(view);
     }
 
     /**
@@ -41,7 +42,7 @@ public class ViewServiceImpl implements ViewService {
      */
     @Override
     @Transactional
-    public Collection<?> list(String viewName, Object view) {
+    public Collection<?> list(Object view) {
         view = deserialize(view);
         return views.values(); // переменная view пока не использутся
     }
@@ -51,7 +52,7 @@ public class ViewServiceImpl implements ViewService {
      */
     @Override
     @Transactional
-    public Object get(String viewName, long id) {
+    public Object get(long id) {
         Object view = views.get(id);
         if (view == null) {
             throw new EntityNotFoundException("office id " + id + " not found");
@@ -64,7 +65,7 @@ public class ViewServiceImpl implements ViewService {
      */
     @Override
     @Transactional
-    public void update(String viewName, Object view) {
+    public void update(Object view) {
         view = deserialize(view);
         long id = ((OfficeView) view).getId();
         if (!views.containsKey(id)) {
@@ -78,7 +79,7 @@ public class ViewServiceImpl implements ViewService {
      */
     @Override
     @Transactional
-    public long save(String viewName, Object view) {
+    public long save(Object view) {
         view = deserialize(view);
         long id = counter.incrementAndGet();
         ((OfficeView) view).setId(id);
@@ -86,7 +87,7 @@ public class ViewServiceImpl implements ViewService {
         return id;
     }
 
-    private Object deserialize(Object json) {
+    private OfficeView deserialize(Object json) {
         return objectMapper.convertValue(json, OfficeView.class);
     }
 }
