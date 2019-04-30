@@ -9,5 +9,4 @@ public class ZirconiumApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ZirconiumApplication.class, args);
 	}
-
 }

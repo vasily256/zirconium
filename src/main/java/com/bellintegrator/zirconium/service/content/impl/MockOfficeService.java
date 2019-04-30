@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Сервис для работы с mock-объектами офисов
  */
 @Service("office")
-public class OfficeService implements ContentService {
+public class MockOfficeService implements ContentService {
 
     private final Map<Long, Object> views = new HashMap<>();
     private final AtomicLong counter = new AtomicLong();
@@ -23,7 +23,7 @@ public class OfficeService implements ContentService {
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public OfficeService(ObjectMapper mapper) {
+    public MockOfficeService(ObjectMapper mapper) {
         this.objectMapper = mapper;
         OfficeView view = new OfficeView(
                 1,
