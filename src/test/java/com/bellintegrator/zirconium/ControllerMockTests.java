@@ -37,7 +37,7 @@ public class ControllerMockTests {
     @Before
     public void start() {
         Map<String, ContentService> contentServiceMap = new HashMap<>();
-        contentServiceMap.put("office", contentSrv);
+        contentServiceMap.put("mock-office", contentSrv);
         Map<String, ClassifierService> classifierServiceMap = new HashMap<>();
         classifierServiceMap.put("docs", classifierSrv);
         ctrl = new Controller(contentServiceMap, classifierServiceMap);
@@ -50,7 +50,7 @@ public class ControllerMockTests {
 
         // Ошибка: вызов ctrl.save(office) приводит к
         // IllegalStateException: No current ServletRequestAttributes
-        assertEquals(gson.toJson(ctrl.save("office", office).getBody()), gson.toJson(SUCCESS_RESPONSE_BODY));
+        assertEquals(gson.toJson(ctrl.save("mock-office", office).getBody()), gson.toJson(SUCCESS_RESPONSE_BODY));
     }
 
     // Запрос данных об офисе id
@@ -58,6 +58,6 @@ public class ControllerMockTests {
     public void mockTestGetOffice() {
         when(contentSrv.get(1L)).thenReturn(office);
 
-        assertEquals(gson.toJson(ctrl.get("office", 1L)), gson.toJson(office));
+        assertEquals(gson.toJson(ctrl.get("mock-office", 1L)), gson.toJson(office));
     }
 }

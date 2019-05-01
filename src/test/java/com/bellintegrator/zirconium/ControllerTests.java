@@ -147,7 +147,7 @@ public class ControllerTests {
 	}
 
 	private String createURLWithPort(String uri) {
-		return "http://localhost:" + port + "/api/office" + uri;
+		return "http://localhost:" + port + "/api/mock-office" + uri;
 	}
 
 	static <T> JSONResponseWrapper.Wrapper wrap(T o) {

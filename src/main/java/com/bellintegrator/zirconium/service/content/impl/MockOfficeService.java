@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * Сервис для работы с mock-объектами офисов
  */
-//@Service("office")
+@Service("mock-office")
 public class MockOfficeService implements ContentService<OfficeView> {
 
     private final Map<Long, OfficeView> views = new HashMap<>();
@@ -43,8 +43,7 @@ public class MockOfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public Collection<OfficeView> list(Object view) {
-        OfficeView officeView = deserialize(view);
-        return views.values(); // переменная view пока не использутся
+        return views.values(); // переменная view не использутся
     }
 
     /**
