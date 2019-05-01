@@ -8,15 +8,15 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OfficeView {
 
-    private long id;
-    private long orgId;
+    private Long id;
+    private Long orgId;
     private String name;
     private String address;
     private List<String> phone;
-    private boolean isActive;
+    private Boolean isActive;
 
-    public OfficeView(long id, long orgId, String name,
-                      String address, List<String> phone, boolean isActive) {
+    public OfficeView(Long id, Long orgId, String name,
+                      String address, List<String> phone, Boolean isActive) {
         this.id = id;
         this.orgId = orgId;
         this.name = name;
@@ -26,14 +26,14 @@ public class OfficeView {
     }
 
     public OfficeView() {
-
+        super();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public long getOrgId() {
+    public Long getOrgId() {
         return orgId;
     }
 
@@ -50,15 +50,15 @@ public class OfficeView {
     }
 
     @JsonProperty("isActive") // предотвращение произвольного переименования поля в ответе
-    public boolean isActive() {
+    public Boolean isActive() {
         return isActive;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setOrgId(long orgId) {
+    public void setOrgId(Long orgId) {
         this.orgId = orgId;
     }
 
@@ -74,7 +74,19 @@ public class OfficeView {
         this.phone = phone;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    @Override
+    public String toString() {
+        return "OfficeView{" +
+                       "id=" + id +
+                       ", orgId=" + orgId +
+                       ", name='" + name + '\'' +
+                       ", address='" + address + '\'' +
+                       ", phone=" + phone +
+                       ", isActive=" + isActive +
+                       '}';
     }
 }

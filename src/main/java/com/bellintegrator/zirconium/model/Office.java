@@ -9,13 +9,13 @@ public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
                     generator = "Office_sequence")
-    private long id;
+    private Long id;
 
     @Version
-    private int version;
+    private Integer version;
 
     @Column(name = "org_id")
-    private long orgId;
+    private Long orgId;
 
     private String name;
 
@@ -37,29 +37,29 @@ public class Office {
     private List<Phone> phone;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private Boolean isActive;
 
     protected Office() {
         super();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 
-    public long getOrgId() {
+    public Long getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(long orgId) {
+    public void setOrgId(Long orgId) {
         this.orgId = orgId;
     }
 
@@ -87,11 +87,24 @@ public class Office {
         this.phone = phone;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    @Override
+    public String toString() {
+        return "Office{" +
+                       "id=" + id +
+                       ", version=" + version +
+                       ", orgId=" + orgId +
+                       ", name='" + name + '\'' +
+                       ", address=" + address +
+                       ", phone=" + phone +
+                       ", isActive=" + isActive +
+                       '}';
     }
 }

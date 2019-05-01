@@ -46,8 +46,8 @@ public class ControllerTests {
 	private Gson gson;
 
 	static OfficeView office = new OfficeView(
-			2,
-			1,
+			2L,
+			1L,
 			"Отдел тестирования",
 			"г. Москва, ул. Озёрная, д. 1",
 			Arrays.asList("74957870538"),
@@ -96,8 +96,8 @@ public class ControllerTests {
     @Test
 	public void testListOffice() throws JSONException {
 		OfficeView office2 = new OfficeView(
-				1,
-				1,
+				1L,
+				1L,
 				"Исследовательский центр",
 				"г. Москва, ул. Вербная, д. 5",
 				Arrays.asList("74957870544", "74957870545"),
@@ -132,7 +132,7 @@ public class ControllerTests {
 	// Попытка обновления сведений о несуществующем офисе id 3
 	@Test
 	public void testUpdateOffice2() throws JSONException {
-		office.setId(3);
+		office.setId(3L);
 		office.setAddress("г. Москва, Рублёвское ш., д. 29");
 		office.setPhone(Arrays.asList("74994445840", "74994445841"));
 

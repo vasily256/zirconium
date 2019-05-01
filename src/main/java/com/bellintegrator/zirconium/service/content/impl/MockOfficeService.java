@@ -26,8 +26,8 @@ public class MockOfficeService implements ContentService<OfficeView> {
     public MockOfficeService(ObjectMapper mapper) {
         this.objectMapper = mapper;
         OfficeView view = new OfficeView(
-                1,
-                1,
+                1L,
+                1L,
                 "Исследовательский центр",
                 "г. Москва, ул. Вербная, д. 5",
                 Arrays.asList("74957870544", "74957870545"),

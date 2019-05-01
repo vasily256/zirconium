@@ -8,11 +8,13 @@ import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OfficeView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+
 
 /**
  * Сервис для работы с mock-объектами офисов
@@ -44,8 +46,8 @@ public class OfficeService implements ContentService<OfficeView> {
                 .register();
 
         OfficeView view = new OfficeView(
-                1,
-                1,
+                1L,
+                1L,
                 "Исследовательский центр",
                 "г. Москва, ул. Вербная, д. 5",
                 Arrays.asList("74957870544", "74957870545"),
@@ -61,8 +63,10 @@ public class OfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public Collection<OfficeView> list(Object view) {
-        OfficeView officeView = deserialize(view); // переменная view пока не использутся
-        List<Office> offices = officeRepository.findAll();
+        OfficeView officeView = deserialize(view);
+        Office office = mapperFacade.map(officeView, Office.class);
+
+        List<Office> offices = officeRepository.findAll(Example.of(office));
         return mapperFacade.mapAsList(offices, OfficeView.class);
     }
 
