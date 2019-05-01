@@ -61,8 +61,9 @@ public class OfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public Collection<OfficeView> list(Object view) {
-        OfficeView officeView = deserialize(view);
-        return views.values(); // переменная view пока не использутся
+        OfficeView officeView = deserialize(view); // переменная view пока не использутся
+        List<Office> offices = officeRepository.findAll();
+        return mapperFacade.mapAsList(offices, OfficeView.class);
     }
 
     /**
