@@ -7,7 +7,7 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "Country_sequence")
-    private Long id;
+    private long id;
 
     private String code;
 

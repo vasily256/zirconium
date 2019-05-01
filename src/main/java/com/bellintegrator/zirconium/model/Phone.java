@@ -15,6 +15,10 @@ public class Phone {
 
     private String phone;
 
+    protected Phone() {
+        super();
+    }
+
     public long getId() {
         return id;
     }

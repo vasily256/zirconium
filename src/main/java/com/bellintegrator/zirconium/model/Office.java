@@ -39,6 +39,10 @@ public class Office {
     @Column(name = "is_active")
     private boolean isActive;
 
+    protected Office() {
+        super();
+    }
+
     public long getId() {
         return id;
     }

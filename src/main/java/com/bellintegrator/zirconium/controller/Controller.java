@@ -1,10 +1,11 @@
 package com.bellintegrator.zirconium.controller;
 
 import com.bellintegrator.zirconium.service.classifier.ClassifierService;
+import com.bellintegrator.zirconium.service.content.ContentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.bellintegrator.zirconium.service.content.ContentService;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -22,7 +23,6 @@ import static com.bellintegrator.zirconium.controller.SuccessResponseBody.*;
 public class Controller {
 
     private final Map<String, ContentService> contentServices;
-
     private final Map<String, ClassifierService> classifierServices;
 
     @Autowired
@@ -72,8 +72,12 @@ public class Controller {
     @PostMapping("/{serviceName}/save")
     public ResponseEntity<?> save(@PathVariable String serviceName, @RequestBody Object view) {
         long id = contentServices.get(serviceName).save(view);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
-            "/{id}").buildAndExpand(id).toUri();
+
+        URI location = ServletUriComponentsBuilder
+                               .fromCurrentRequest()
+                               .path("/{id}")
+                               .buildAndExpand(id)
+                               .toUri();
 
         return ResponseEntity.created(location).body(SUCCESS_RESPONSE_BODY);
     }

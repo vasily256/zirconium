@@ -8,7 +8,7 @@ public class DocumentType {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "Document_Type_sequence")
-    private Long id;
+    private long id;
 
     private String code;
 
