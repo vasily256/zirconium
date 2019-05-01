@@ -25,6 +25,10 @@ public class OfficeView {
         this.isActive = isActive;
     }
 
+    public OfficeView() {
+
+    }
+
     public long getId() {
         return id;
     }

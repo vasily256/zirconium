@@ -17,7 +17,17 @@ public class MapperFacadeImpl implements MapperFacade {
     }
 
     @Override
+    public <S, D> D map(S sourceObject, Class<D> destinationClass) {
+        return mapperFactory.getMapperFacade().map(sourceObject, destinationClass);
+    }
+
+    @Override
     public <S, D> List<D> mapAsList(Iterable<S> sourceObject, Class<D> destinationClass) {
         return mapperFactory.getMapperFacade().mapAsList(sourceObject, destinationClass);
+    }
+
+    @Override
+    public MapperFactory getMapperFactory() {
+        return mapperFactory;
     }
 }

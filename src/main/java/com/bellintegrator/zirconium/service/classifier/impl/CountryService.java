@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("countries")
-public class CountryService implements ClassifierService {
+public class CountryService implements ClassifierService<CountryView> {
 
     private final CountryRepository countryRepository;
     private final MapperFacade mapperFacade;
@@ -25,7 +25,7 @@ public class CountryService implements ClassifierService {
     }
 
     @Override
-    public List<?> list() {
+    public List<CountryView> list() {
         List<Country> countries =  countryRepository.findAll();
         return mapperFacade.mapAsList(countries, CountryView.class);
     }

@@ -14,4 +14,24 @@ public class Phone {
     private int version;
 
     private String phone;
+
+    public long getId() {
+        return id;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

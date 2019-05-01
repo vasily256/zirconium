@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("docs")
-public class DocumentTypeService implements ClassifierService {
+public class DocumentTypeService implements ClassifierService<DocumentTypeView> {
 
     private final DocumentTypeRepository documentRepository;
     private final MapperFacade mapperFacade;
@@ -25,7 +25,7 @@ public class DocumentTypeService implements ClassifierService {
     }
 
     @Override
-    public List<?> list() {
+    public List<DocumentTypeView> list() {
         List<DocumentType> documents =  documentRepository.findAll();
         return mapperFacade.mapAsList(documents, DocumentTypeView.class);
     }

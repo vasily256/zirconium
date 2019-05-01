@@ -5,14 +5,14 @@ import java.util.Collection;
 /**
  * Сервис для получения, создания и обновления офисов
  */
-public interface ContentService {
+public interface ContentService<T> {
 
     /**
      * Получить список офисов по заданным критериям
      * @param view - критерии отбора
      * @return список офисов
      */
-    Collection<?> list(Object view);
+    Collection<T> list(Object view);
 
     /**
      * Получить офис с заданным идентификатором
@@ -21,7 +21,7 @@ public interface ContentService {
      * @throws java.util.NoSuchElementException если не существует
      *         офиса с саданным идентификатором
      */
-    Object get(long id);
+    T get(long id);
 
     /**
      * Обновить сведения об офисе

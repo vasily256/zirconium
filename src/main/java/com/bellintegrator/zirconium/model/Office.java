@@ -38,4 +38,56 @@ public class Office {
 
     @Column(name = "is_active")
     private boolean isActive;
+
+    public long getId() {
+        return id;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(long orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Phone> getPhone() {
+        return phone;
+    }
+
+    public void setPhone(List<Phone> phone) {
+        this.phone = phone;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }
