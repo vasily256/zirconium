@@ -29,7 +29,6 @@ public class OfficeControllerMockTests {
     private OfficeController ctrl;
 
     // Сохранение офиса
-    @Test
     public void mockTestAddOffice() {
         when(officeService.save(office)).thenReturn(1L);
 
