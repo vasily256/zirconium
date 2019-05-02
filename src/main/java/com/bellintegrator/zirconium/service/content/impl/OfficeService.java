@@ -77,12 +77,12 @@ public class OfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public OfficeView get(long id) {
-        Office office = officeRepository.getOne(id);
-        if (office == null) {
+        Optional<Office> office = officeRepository.findById(id);
+        if (!office.isPresent()) {
             throw new EntityNotFoundException("office id " + id + " not found");
         }
 
-        return mapperFacade.map(office, OfficeView.class);
+        return mapperFacade.map(office.get(), OfficeView.class);
     }
 
     /**
@@ -107,11 +107,10 @@ public class OfficeService implements ContentService<OfficeView> {
     public long save(Object view) {
         OfficeView officeView = deserialize(view);
         Office office = mapperFacade.map(officeView, Office.class);
-        Address address = new Address(0, officeView.getAddress());
+        Address address = new Address(officeView.getAddress());
         office.setAddress(address);
-        office.setActive(false);
         officeRepository.save(office);
-        return 0L;
+        return office.getId();
     }
 
     private OfficeView deserialize(Object json) {
