@@ -12,7 +12,7 @@ public interface ContentService<T> {
      * @param view - критерии отбора
      * @return список офисов
      */
-    Collection<T> list(Object view);
+    Collection<T> list(T view);
 
     /**
      * Получить офис с заданным идентификатором
@@ -29,12 +29,12 @@ public interface ContentService<T> {
      * @throws java.util.NoSuchElementException если не существует
      *         офиса с саданным идентификатором
      */
-    void update(Object view);
+    void update(T view);
 
     /**
      * Добавить новый офис
      * @param view офис
      * @return уникальный идентификатор нового офиса
      */
-    long save(Object view);
+    long save(T view);
 }

@@ -42,7 +42,7 @@ public class MockOfficeService implements ContentService<OfficeView> {
      */
     @Override
     @Transactional
-    public Collection<OfficeView> list(Object view) {
+    public Collection<OfficeView> list(OfficeView officeView) {
         return views.values(); // переменная view не использутся
     }
 
@@ -64,8 +64,8 @@ public class MockOfficeService implements ContentService<OfficeView> {
      */
     @Override
     @Transactional
-    public void update(Object view) {
-        OfficeView officeView = deserialize(view);
+    public void update(OfficeView officeView) {
+//        OfficeView officeView = deserialize(view);
         long id = officeView.getId();
         if (!views.containsKey(id)) {
             throw new EntityNotFoundException("can't update: office id " + id + " not found");
@@ -78,8 +78,8 @@ public class MockOfficeService implements ContentService<OfficeView> {
      */
     @Override
     @Transactional
-    public long save(Object view) {
-        OfficeView officeView = deserialize(view);
+    public long save(OfficeView officeView) {
+//        OfficeView officeView = deserialize(view);
         long id = counter.incrementAndGet();
         officeView.setId(id);
         views.putIfAbsent(id, officeView);

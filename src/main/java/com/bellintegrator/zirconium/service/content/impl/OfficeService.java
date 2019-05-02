@@ -46,7 +46,7 @@ public class OfficeService implements ContentService<OfficeView> {
                 .byDefault()
                 .register();
 
-        OfficeView view = new OfficeView(
+        OfficeView officeView = new OfficeView(
                 1L,
                 1L,
                 "Исследовательский центр",
@@ -63,8 +63,8 @@ public class OfficeService implements ContentService<OfficeView> {
      */
     @Override
     @Transactional
-    public Collection<OfficeView> list(Object view) {
-        OfficeView officeView = deserialize(view);
+    public Collection<OfficeView> list(OfficeView officeView) {
+//        OfficeView officeView = deserialize(view);
         Office office = mapperFacade.map(officeView, Office.class);
 
         List<Office> offices = officeRepository.findAll(Example.of(office));
@@ -90,8 +90,8 @@ public class OfficeService implements ContentService<OfficeView> {
      */
     @Override
     @Transactional
-    public void update(Object view) {
-        OfficeView officeView = deserialize(view);
+    public void update(OfficeView officeView) {
+//        OfficeView officeView = deserialize(view);
 
         long id = officeView.getId();
         Optional<Office> container = officeRepository.findById(id);
@@ -110,8 +110,8 @@ public class OfficeService implements ContentService<OfficeView> {
      */
     @Override
     @Transactional
-    public long save(Object view) {
-        OfficeView officeView = deserialize(view);
+    public long save(OfficeView officeView) {
+//        OfficeView officeView = deserialize(view);
         Office office = mapperFacade.map(officeView, Office.class);
         Address address = new Address(officeView.getAddress());
         office.setAddress(address);
@@ -119,7 +119,7 @@ public class OfficeService implements ContentService<OfficeView> {
         return office.getId();
     }
 
-    private OfficeView deserialize(Object json) {
-        return objectMapper.convertValue(json, OfficeView.class);
-    }
+//    private OfficeView deserialize(Object json) {
+//        return objectMapper.convertValue(json, OfficeView.class);
+//    }
 }
