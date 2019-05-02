@@ -1,6 +1,7 @@
 package com.bellintegrator.zirconium.service.content.impl;
 
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
+import com.bellintegrator.zirconium.model.Address;
 import com.bellintegrator.zirconium.model.Office;
 import com.bellintegrator.zirconium.model.mapper.MapperFacade;
 import com.bellintegrator.zirconium.repository.OfficeRepository;
@@ -40,8 +41,8 @@ public class OfficeService implements ContentService<OfficeView> {
 
         mapperFacade.getMapperFactory()
                 .classMap(Office.class, OfficeView.class)
-                .field("address.address", "address")
-                .field("phone{phone}", "phone{}")
+                .fieldAToB("address.address", "address")
+                .fieldAToB("phone{phone}", "phone{}")
                 .byDefault()
                 .register();
 
@@ -54,7 +55,7 @@ public class OfficeService implements ContentService<OfficeView> {
                 true
         );
 
-        save(view);
+//        save(view);
     }
 
     /**
@@ -105,10 +106,12 @@ public class OfficeService implements ContentService<OfficeView> {
     @Transactional
     public long save(Object view) {
         OfficeView officeView = deserialize(view);
-        long id = counter.incrementAndGet();
-        officeView.setId(id);
-        views.putIfAbsent(id, officeView);
-        return id;
+        Office office = mapperFacade.map(officeView, Office.class);
+        Address address = new Address(0, officeView.getAddress());
+        office.setAddress(address);
+        office.setActive(false);
+        officeRepository.save(office);
+        return 0L;
     }
 
     private OfficeView deserialize(Object json) {
