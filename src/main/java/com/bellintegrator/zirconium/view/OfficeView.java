@@ -1,8 +1,10 @@
 package com.bellintegrator.zirconium.view;
 
+import com.bellintegrator.zirconium.view.validationgroup.Update;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -10,7 +12,10 @@ public class OfficeView {
 
     private Long id;
     private Long orgId;
+
+    @NotNull(groups = Update.class)
     private String name;
+
     private String address;
     private List<String> phone;
     private Boolean isActive;
