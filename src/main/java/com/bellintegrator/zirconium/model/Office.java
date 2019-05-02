@@ -7,8 +7,8 @@ import java.util.List;
 public class Office {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                    generator = "Office_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OfficeSequence")
+    @SequenceGenerator(name="OfficeSequence", sequenceName = "Office_sequence", allocationSize=1)
     private Long id;
 
     @Version

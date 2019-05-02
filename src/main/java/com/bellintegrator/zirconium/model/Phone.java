@@ -6,8 +6,8 @@ import javax.persistence.*;
 public class Phone {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                    generator = "Phone_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PhoneSequence")
+    @SequenceGenerator(name="PhoneSequence", sequenceName = "Phone_sequence", allocationSize=1)
     private long id;
 
     @Version
