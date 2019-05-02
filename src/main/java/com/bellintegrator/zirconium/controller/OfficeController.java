@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.constraints.Min;
 import java.net.URI;
 import java.util.Collection;
 
@@ -38,7 +37,7 @@ public class OfficeController {
      * @return список офисов
      */
     @PostMapping("/list")
-    public Collection<?> list(@Validated(ListViews.class) @RequestBody OfficeView officeView) {
+    public Collection<OfficeView> list(@Validated(ListViews.class) @RequestBody OfficeView officeView) {
         return officeService.list(officeView);
     }
 
@@ -48,7 +47,7 @@ public class OfficeController {
      * @return офис
      */
     @GetMapping("/{id}")
-    public Object get(@PathVariable @Min(1) long id) {
+    public OfficeView get(@PathVariable long id) {
         return officeService.get(id);
     }
 
