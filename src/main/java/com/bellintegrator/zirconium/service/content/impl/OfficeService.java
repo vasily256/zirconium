@@ -92,11 +92,17 @@ public class OfficeService implements ContentService<OfficeView> {
     @Transactional
     public void update(Object view) {
         OfficeView officeView = deserialize(view);
+
         long id = officeView.getId();
-        if (!views.containsKey(id)) {
+        Optional<Office> container = officeRepository.findById(id);
+        if (!container.isPresent()) {
             throw new EntityNotFoundException("can't update: office id " + id + " not found");
         }
-        views.put(id, officeView);
+        Office office = container.get();
+
+        office.getAddress().setAddress(officeView.getAddress());
+        office.setName(officeView.getName());
+        officeRepository.save(office);
     }
 
     /**
