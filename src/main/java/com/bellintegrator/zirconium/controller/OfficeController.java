@@ -2,7 +2,9 @@ package com.bellintegrator.zirconium.controller;
 
 import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OfficeView;
-import com.bellintegrator.zirconium.view.validationgroup.Update;
+import com.bellintegrator.zirconium.view.validationgroup.ListViews;
+import com.bellintegrator.zirconium.view.validationgroup.SaveView;
+import com.bellintegrator.zirconium.view.validationgroup.UpdateView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.constraints.Min;
 import java.net.URI;
 import java.util.Collection;
 
@@ -35,7 +38,7 @@ public class OfficeController {
      * @return список офисов
      */
     @PostMapping("/list")
-    public Collection<?> list(@RequestBody OfficeView officeView) {
+    public Collection<?> list(@Validated(ListViews.class) @RequestBody OfficeView officeView) {
         return officeService.list(officeView);
     }
 
@@ -45,7 +48,7 @@ public class OfficeController {
      * @return офис
      */
     @GetMapping("/{id}")
-    public Object get(@PathVariable long id) {
+    public Object get(@PathVariable @Min(1) long id) {
         return officeService.get(id);
     }
 
@@ -55,7 +58,7 @@ public class OfficeController {
      * @return ответ на запрос
      */
     @PostMapping("/update")
-    public ResponseEntity<?> update(@Validated(Update.class) @RequestBody OfficeView officeView) {
+    public ResponseEntity<?> update(@Validated(UpdateView.class) @RequestBody OfficeView officeView) {
 
         officeService.update(officeView);
 
@@ -68,7 +71,7 @@ public class OfficeController {
      * @return ответ на запрос
      */
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody OfficeView officeView) {
+    public ResponseEntity<?> save(@Validated(SaveView.class) @RequestBody OfficeView officeView) {
         long id = officeService.save(officeView);
 
         URI location = ServletUriComponentsBuilder

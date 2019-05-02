@@ -1,6 +1,8 @@
 package com.bellintegrator.zirconium.view;
 
-import com.bellintegrator.zirconium.view.validationgroup.Update;
+import com.bellintegrator.zirconium.view.validationgroup.ListViews;
+import com.bellintegrator.zirconium.view.validationgroup.SaveView;
+import com.bellintegrator.zirconium.view.validationgroup.UpdateView;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,18 +12,24 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OfficeView {
 
+    @NotNull(groups = UpdateView.class)
     private Long id;
+
+    @NotNull(groups = {ListViews.class, SaveView.class})
     private Long orgId;
 
-    @NotNull(groups = Update.class)
+    @NotNull(groups = UpdateView.class)
     private String name;
 
+    @NotNull(groups = UpdateView.class)
     private String address;
+
     private List<String> phone;
+
     private Boolean isActive;
 
-    public OfficeView(Long id, Long orgId, String name,
-                      String address, List<String> phone, Boolean isActive) {
+    public OfficeView(Long id, Long orgId, String name, String address,
+                      List<String> phone, Boolean isActive) {
         this.id = id;
         this.orgId = orgId;
         this.name = name;
@@ -81,17 +89,5 @@ public class OfficeView {
 
     public void setActive(Boolean active) {
         isActive = active;
-    }
-
-    @Override
-    public String toString() {
-        return "OfficeView{" +
-                       "id=" + id +
-                       ", orgId=" + orgId +
-                       ", name='" + name + '\'' +
-                       ", address='" + address + '\'' +
-                       ", phone=" + phone +
-                       ", isActive=" + isActive +
-                       '}';
     }
 }
