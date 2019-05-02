@@ -8,7 +8,7 @@ public class Office {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OfficeSequence")
-    @SequenceGenerator(name="OfficeSequence", sequenceName = "Office_sequence", allocationSize=1)
+    @SequenceGenerator(name="OfficeSequence", sequenceName = "Office_sequence", allocationSize = 1)
     private Long id;
 
     @Version
@@ -19,7 +19,12 @@ public class Office {
 
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -41,6 +46,13 @@ public class Office {
 
     protected Office() {
         super();
+    }
+
+    @PrePersist
+    void preInsert() {
+        if (isActive == null) {
+            isActive = false;
+        }
     }
 
     public Long getId() {

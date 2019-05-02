@@ -7,7 +7,7 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AddressSequence")
-    @SequenceGenerator(name="AddressSequence", sequenceName = "Address_sequence", allocationSize=1)
+    @SequenceGenerator(name="AddressSequence", sequenceName = "Address_sequence", allocationSize = 1)
     private long id;
 
     @Version
@@ -19,8 +19,7 @@ public class Address {
         super();
     }
 
-    public Address(Integer version, String address) {
-        this.version = version;
+    public Address(String address) {
         this.address = address;
     }
 
@@ -34,5 +33,10 @@ public class Address {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return address;
     }
 }

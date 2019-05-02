@@ -7,7 +7,7 @@ public class Phone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PhoneSequence")
-    @SequenceGenerator(name="PhoneSequence", sequenceName = "Phone_sequence", allocationSize=1)
+    @SequenceGenerator(name="PhoneSequence", sequenceName = "Phone_sequence", allocationSize = 1)
     private long id;
 
     @Version
@@ -41,6 +41,6 @@ public class Phone {
 
     @Override
     public String toString() {
-        return "\'" + phone + '\'';
+        return phone;
     }
 }

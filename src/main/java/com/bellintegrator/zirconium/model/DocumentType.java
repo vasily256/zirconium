@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class DocumentType {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DocumentTypeSequence")
-    @SequenceGenerator(name="DocumentTypeSequence", sequenceName = "Document_Type_sequence", allocationSize=1)
+    @SequenceGenerator(name="DocumentTypeSequence", sequenceName = "Document_Type_sequence", allocationSize = 1)
     private long id;
 
     private String code;

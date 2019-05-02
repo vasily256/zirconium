@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CountrySequence")
-    @SequenceGenerator(name="CountrySequence", sequenceName = "Country_sequence", allocationSize=1)
+    @SequenceGenerator(name="CountrySequence", sequenceName = "Country_sequence", allocationSize = 1)
     private long id;
 
     private String code;
