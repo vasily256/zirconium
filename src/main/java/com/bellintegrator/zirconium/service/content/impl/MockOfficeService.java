@@ -3,7 +3,6 @@ package com.bellintegrator.zirconium.service.content.impl;
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
 import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OfficeView;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +19,8 @@ public class MockOfficeService implements ContentService<OfficeView> {
     private final Map<Long, OfficeView> views = new HashMap<>();
     private final AtomicLong counter = new AtomicLong();
 
-    private final ObjectMapper objectMapper;
-
     @Autowired
-    public MockOfficeService(ObjectMapper mapper) {
-        this.objectMapper = mapper;
+    public MockOfficeService() {
         OfficeView view = new OfficeView(
                 1L,
                 1L,
@@ -65,7 +61,6 @@ public class MockOfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public void update(OfficeView officeView) {
-//        OfficeView officeView = deserialize(view);
         long id = officeView.getId();
         if (!views.containsKey(id)) {
             throw new EntityNotFoundException("can't update: office id " + id + " not found");
@@ -79,14 +74,9 @@ public class MockOfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public long save(OfficeView officeView) {
-//        OfficeView officeView = deserialize(view);
         long id = counter.incrementAndGet();
         officeView.setId(id);
         views.putIfAbsent(id, officeView);
         return id;
-    }
-
-    private OfficeView deserialize(Object json) {
-        return objectMapper.convertValue(json, OfficeView.class);
     }
 }
