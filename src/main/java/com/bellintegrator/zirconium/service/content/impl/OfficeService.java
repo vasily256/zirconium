@@ -101,8 +101,16 @@ public class OfficeService implements ContentService<OfficeView> {
     @Transactional
     public long save(OfficeView officeView) {
         Office office = mapperFacade.map(officeView, Office.class);
-        Address address = new Address(officeView.getAddress());
-        office.setAddress(address);
+
+        String address = officeView.getAddress();
+        office.setAddress(new Address(address));
+
+        List<Phone> phones = officeView.getPhone()
+                                     .stream()
+                                     .map(Phone::new)
+                                     .collect(Collectors.toList());
+        office.setPhone(phones);
+
         officeRepository.save(office);
         return office.getId();
     }
