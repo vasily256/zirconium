@@ -90,4 +90,16 @@ public class OfficeView {
     public void setActive(Boolean active) {
         isActive = active;
     }
+
+    @Override
+    public String toString() {
+        return "OfficeView{" +
+                       "id=" + id +
+                       ", orgId=" + orgId +
+                       ", name='" + name + '\'' +
+                       ", address='" + address + '\'' +
+                       ", phone=" + phone +
+                       ", isActive=" + isActive +
+                       '}';
+    }
 }
