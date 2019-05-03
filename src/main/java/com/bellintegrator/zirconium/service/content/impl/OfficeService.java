@@ -3,6 +3,7 @@ package com.bellintegrator.zirconium.service.content.impl;
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
 import com.bellintegrator.zirconium.model.Address;
 import com.bellintegrator.zirconium.model.Office;
+import com.bellintegrator.zirconium.model.Phone;
 import com.bellintegrator.zirconium.model.mapper.MapperFacade;
 import com.bellintegrator.zirconium.repository.OfficeRepository;
 import com.bellintegrator.zirconium.service.content.ContentService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Сервис для работы с объектами офисов
@@ -70,7 +72,6 @@ public class OfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public void update(OfficeView officeView) {
-
         long id = officeView.getId();
         Optional<Office> container = officeRepository.findById(id);
         if (!container.isPresent()) {
@@ -78,8 +79,18 @@ public class OfficeService implements ContentService<OfficeView> {
         }
         Office office = container.get();
 
-        office.getAddress().setAddress(officeView.getAddress());
-        office.setName(officeView.getName());
+        String name = officeView.getName();
+        office.setName(name);
+
+        String address = officeView.getAddress();
+        office.getAddress().setAddress(address);
+
+        List<Phone> phones = officeView.getPhone()
+                                       .stream()
+                                       .map(Phone::new)
+                                       .collect(Collectors.toList());
+        office.setPhone(phones);
+
         officeRepository.save(office);
     }
 
