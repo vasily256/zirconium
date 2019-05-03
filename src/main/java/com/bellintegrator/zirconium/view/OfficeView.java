@@ -1,8 +1,8 @@
 package com.bellintegrator.zirconium.view;
 
-import com.bellintegrator.zirconium.view.validationgroup.ListViews;
-import com.bellintegrator.zirconium.view.validationgroup.SaveView;
-import com.bellintegrator.zirconium.view.validationgroup.UpdateView;
+import com.bellintegrator.zirconium.view.validation.group.ListViews;
+import com.bellintegrator.zirconium.view.validation.group.SaveView;
+import com.bellintegrator.zirconium.view.validation.group.UpdateView;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

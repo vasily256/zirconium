@@ -2,9 +2,9 @@ package com.bellintegrator.zirconium.controller;
 
 import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OfficeView;
-import com.bellintegrator.zirconium.view.validationgroup.ListViews;
-import com.bellintegrator.zirconium.view.validationgroup.SaveView;
-import com.bellintegrator.zirconium.view.validationgroup.UpdateView;
+import com.bellintegrator.zirconium.view.validation.group.ListViews;
+import com.bellintegrator.zirconium.view.validation.group.SaveView;
+import com.bellintegrator.zirconium.view.validation.group.UpdateView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
