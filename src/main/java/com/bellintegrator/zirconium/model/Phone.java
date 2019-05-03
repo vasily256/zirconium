@@ -19,6 +19,10 @@ public class Phone {
         super();
     }
 
+    public Phone(String phone) {
+        this.phone = phone;
+    }
+
     public long getId() {
         return id;
     }
