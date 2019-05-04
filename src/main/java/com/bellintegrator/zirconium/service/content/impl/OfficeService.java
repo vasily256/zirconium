@@ -6,15 +6,18 @@ import com.bellintegrator.zirconium.model.Office;
 import com.bellintegrator.zirconium.model.Phone;
 import com.bellintegrator.zirconium.model.mapper.MapperFacade;
 import com.bellintegrator.zirconium.repository.OfficeRepository;
+import com.bellintegrator.zirconium.repository.OfficeSpecification;
 import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OfficeView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.bellintegrator.zirconium.repository.Operator.*;
+import static org.springframework.data.jpa.domain.Specification.where;
 
 /**
  * Сервис для работы с объектами офисов
@@ -46,9 +49,15 @@ public class OfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public Collection<OfficeView> list(OfficeView officeView) {
-        Office office = mapperFacade.map(officeView, Office.class);
+        Long orgId = officeView.getOrgId();
+        OfficeSpecification specOrgId = new OfficeSpecification("orgId", EQUAL, orgId);
 
-        List<Office> offices = officeRepository.findAll(Example.of(office));
+        String name = officeView.getName();
+        OfficeSpecification specName = new OfficeSpecification("name", LIKE, name);
+
+        List<Office> offices
+                = officeRepository.findAll(where(specOrgId).and(specName));
+
         return mapperFacade.mapAsList(offices, OfficeView.class);
     }
 
