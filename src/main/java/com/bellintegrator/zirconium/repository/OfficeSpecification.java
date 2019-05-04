@@ -2,24 +2,18 @@ package com.bellintegrator.zirconium.repository;
 
 import com.bellintegrator.zirconium.model.Office;
 import com.bellintegrator.zirconium.model.Phone;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.bellintegrator.zirconium.view.OfficeView;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OfficeSpecification implements Specification<Office> {
+    private final OfficeView officeView;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    private String key;
-    private Operator operator;
-    private Object value;
-
-    public OfficeSpecification(String key, Operator operator, Object value) {
-        this.key = key;
-        this.operator = operator;
-        this.value = value;
+    public OfficeSpecification(OfficeView officeView) {
+        this.officeView = officeView;
     }
 
     @Override
@@ -28,20 +22,27 @@ public class OfficeSpecification implements Specification<Office> {
                                  CriteriaBuilder criteriaBuilder) {
 
         criteriaQuery.distinct(true);
+        Join<Office, Phone> phone = root.join("phone");
+        List<Predicate> predicates = new ArrayList<>();
 
-        if (value == null) {
-            return null;
+        Long orgId = officeView.getOrgId();
+        predicates.add(criteriaBuilder.equal(root.get("orgId"), orgId));
+
+        Boolean isActive = officeView.isActive();
+        if (isActive != null) {
+            predicates.add(criteriaBuilder.equal(root.get("isActive"), isActive));
         }
 
-        if (operator == Operator.EQUAL) {
-            return criteriaBuilder.equal(root.get(key), value);
-        } else if (operator == Operator.IN) {
-            Join<Office, Phone> phone = root.join("phone");
-            return phone.get("phone").in(value);
-        } else if (value instanceof String && operator == Operator.LIKE) {
-            return criteriaBuilder.like(root.get(key), "%" + value + "%");
-        } else {
-            return null;
+        List<String> phones = officeView.getPhone();
+        if (phones != null) {
+            predicates.add(phone.get("phone").in(phones));
         }
+
+        String name = officeView.getName();
+        if (name != null) {
+            predicates.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+        }
+
+        return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 }

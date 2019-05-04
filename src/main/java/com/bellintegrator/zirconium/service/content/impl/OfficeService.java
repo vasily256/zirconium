@@ -18,9 +18,6 @@ import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.bellintegrator.zirconium.repository.Operator.*;
-import static org.springframework.data.jpa.domain.Specification.where;
-
 /**
  * Сервис для работы с объектами офисов
  */
@@ -53,19 +50,8 @@ public class OfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public Collection<OfficeView> list(OfficeView officeView) {
-
-        logger.trace("\n\n" + officeView + "\n");
-
-        Long orgId = officeView.getOrgId();
-        OfficeSpecification specOrgId = new OfficeSpecification("orgId", EQUAL, orgId);
-
-        String name = officeView.getName();
-        OfficeSpecification specName = new OfficeSpecification("name", LIKE, name);
-
-        List<String> phones = officeView.getPhone();
-        OfficeSpecification specPhone = new OfficeSpecification("phone", IN, phones);
-
-        List<Office> offices = officeRepository.findAll(where(specOrgId).and(specName).and(specPhone));
+        OfficeSpecification officeSpec = new OfficeSpecification(officeView);
+        List<Office> offices = officeRepository.findAll(officeSpec);
 
         return mapperFacade.mapAsList(offices, OfficeView.class);
     }
@@ -76,12 +62,13 @@ public class OfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public OfficeView get(long id) {
-        Optional<Office> office = officeRepository.findById(id);
-        if (!office.isPresent()) {
+        Optional<Office> container = officeRepository.findById(id);
+        if (!container.isPresent()) {
             throw new EntityNotFoundException("office id " + id + " not found");
         }
 
-        return mapperFacade.map(office.get(), OfficeView.class);
+        Office office = container.get();
+        return mapperFacade.map(office, OfficeView.class);
     }
 
     /**
@@ -95,6 +82,7 @@ public class OfficeService implements ContentService<OfficeView> {
         if (!container.isPresent()) {
             throw new EntityNotFoundException("can't update: office id " + id + " not found");
         }
+
         Office office = container.get();
 
         String name = officeView.getName();
@@ -121,13 +109,17 @@ public class OfficeService implements ContentService<OfficeView> {
         Office office = mapperFacade.map(officeView, Office.class);
 
         String address = officeView.getAddress();
-        office.setAddress(new Address(address));
+        if (address != null) {
+            office.setAddress(new Address(address));
+        }
 
-        List<Phone> phones = officeView.getPhone()
-                                     .stream()
-                                     .map(Phone::new)
-                                     .collect(Collectors.toList());
-        office.setPhone(phones);
+        List<String> strPhones = officeView.getPhone();
+        if (strPhones != null) {
+            List<Phone> phones = strPhones.stream()
+                                          .map(Phone::new)
+                                          .collect(Collectors.toList());
+            office.setPhone(phones);
+        }
 
         officeRepository.save(office);
         return office.getId();
