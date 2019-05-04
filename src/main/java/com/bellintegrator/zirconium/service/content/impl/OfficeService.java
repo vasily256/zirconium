@@ -9,6 +9,8 @@ import com.bellintegrator.zirconium.repository.OfficeRepository;
 import com.bellintegrator.zirconium.repository.OfficeSpecification;
 import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OfficeView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ public class OfficeService implements ContentService<OfficeView> {
 
     private final OfficeRepository officeRepository;
     private final MapperFacade mapperFacade;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public OfficeService(OfficeRepository officeRepository,
@@ -49,14 +53,19 @@ public class OfficeService implements ContentService<OfficeView> {
     @Override
     @Transactional
     public Collection<OfficeView> list(OfficeView officeView) {
+
+        logger.trace("\n\n" + officeView + "\n");
+
         Long orgId = officeView.getOrgId();
         OfficeSpecification specOrgId = new OfficeSpecification("orgId", EQUAL, orgId);
 
         String name = officeView.getName();
         OfficeSpecification specName = new OfficeSpecification("name", LIKE, name);
 
-        List<Office> offices
-                = officeRepository.findAll(where(specOrgId).and(specName));
+        List<String> phones = officeView.getPhone();
+        OfficeSpecification specPhone = new OfficeSpecification("phone", IN, phones);
+
+        List<Office> offices = officeRepository.findAll(where(specOrgId).and(specName).and(specPhone));
 
         return mapperFacade.mapAsList(offices, OfficeView.class);
     }

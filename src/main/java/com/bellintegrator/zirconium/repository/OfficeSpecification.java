@@ -1,14 +1,17 @@
 package com.bellintegrator.zirconium.repository;
 
 import com.bellintegrator.zirconium.model.Office;
+import com.bellintegrator.zirconium.model.Phone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.util.List;
 
 public class OfficeSpecification implements Specification<Office> {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private String key;
     private Operator operator;
@@ -31,7 +34,10 @@ public class OfficeSpecification implements Specification<Office> {
 
         if (operator == Operator.EQUAL) {
             return criteriaBuilder.equal(root.get(key), value);
-        } else if (operator == Operator.LIKE) {
+        } else if (operator == Operator.IN) {
+            Join<Office, Phone> phone = root.join("phone");
+            return phone.get("phone").in((List) value);
+        } else if (value instanceof String && operator == Operator.LIKE) {
             return criteriaBuilder.like(root.get(key), "%" + value + "%");
         } else {
             return null;
