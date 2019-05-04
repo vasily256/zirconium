@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class OfficeSpecification implements Specification<Office> {
     private final OfficeView officeView;
@@ -22,7 +23,7 @@ public class OfficeSpecification implements Specification<Office> {
                                  CriteriaBuilder criteriaBuilder) {
 
         criteriaQuery.distinct(true);
-        Join<Office, Phone> phone = root.join("phone");
+        Join<Office, Phone> phone = root.join("phone", JoinType.LEFT);
         List<Predicate> predicates = new ArrayList<>();
 
         Long orgId = officeView.getOrgId();
@@ -38,7 +39,7 @@ public class OfficeSpecification implements Specification<Office> {
             predicates.add(criteriaBuilder.equal(root.get("address"), address));
         }
 
-        List<String> phones = officeView.getPhone();
+        Set<String> phones = officeView.getPhone();
         if (phones != null) {
             predicates.add(phone.get("phone").in(phones));
         }

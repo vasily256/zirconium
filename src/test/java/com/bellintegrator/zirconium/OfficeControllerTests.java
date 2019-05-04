@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static com.bellintegrator.zirconium.controller.SuccessResponseBody.SUCCESS_RESPONSE_BODY;
@@ -49,7 +50,7 @@ public class OfficeControllerTests {
 			1L,
 			"Отдел тестирования",
 			"г. Москва, ул. Озёрная, д. 1",
-			Arrays.asList("74957870538"),
+			new HashSet<>(Arrays.asList("74957870538")),
 			true
 	);
 
@@ -75,13 +76,6 @@ public class OfficeControllerTests {
 		ResponseEntity<String> response = restTemplate.exchange(
 				createURLWithPort("/5"), HttpMethod.GET, entity, String.class);
 
-		System.err.println("**********");
-		System.err.println("**********");
-		System.err.println(gson.toJson(wrap(office)));
-		System.err.println(response.getBody());
-		System.err.println("**********");
-		System.err.println("**********");
-
 		JSONAssert.assertEquals(gson.toJson(wrap(office)), response.getBody(), false);
 	}
 
@@ -106,7 +100,7 @@ public class OfficeControllerTests {
 				1L,
 				"Исследовательский центр",
 				"г. Москва, ул. Вербная, д. 5",
-				Arrays.asList("74957870544", "74957870545"),
+				new HashSet<>(Arrays.asList("74957870544", "74957870545")),
 				true
 		);
 
@@ -127,7 +121,7 @@ public class OfficeControllerTests {
 		office.setId(5L);
 	    office.setName("Отдел разработки");
         office.setAddress("г. Москва, Рублёвское ш., д. 29");
-		office.setPhone(Arrays.asList("74994445840", "74994445841"));
+		office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
 
 		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
 
@@ -143,7 +137,7 @@ public class OfficeControllerTests {
 		office.setId(6L);
 		office.setName("Отдел разработки");
 		office.setAddress("г. Москва, Рублёвское ш., д. 29");
-		office.setPhone(Arrays.asList("74994445840", "74994445841"));
+		office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
 
 		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
 

@@ -1,7 +1,7 @@
 package com.bellintegrator.zirconium.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Office {
@@ -25,14 +25,15 @@ public class Office {
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
-            }
+            },
+            fetch = FetchType.LAZY
     )
     @JoinTable(
             name = "Office_Phone",
             joinColumns = @JoinColumn(name = "office_id"),
             inverseJoinColumns = @JoinColumn(name = "phone_id")
     )
-    private List<Phone> phone;
+    private Set<Phone> phone;
 
     @Column(name = "is_active")
     private Boolean isActive;
@@ -44,7 +45,7 @@ public class Office {
     @PrePersist
     void preInsert() {
         if (isActive == null) {
-            isActive = false;
+            isActive = true;
         }
     }
 
@@ -84,11 +85,11 @@ public class Office {
         this.address = address;
     }
 
-    public List<Phone> getPhone() {
+    public Set<Phone> getPhone() {
         return phone;
     }
 
-    public void setPhone(List<Phone> phone) {
+    public void setPhone(Set<Phone> phone) {
         this.phone = phone;
     }
 

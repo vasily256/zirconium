@@ -89,10 +89,10 @@ public class OfficeService implements ContentService<OfficeView> {
         String address = officeView.getAddress();
         office.setAddress(address);
 
-        List<Phone> phones = officeView.getPhone()
+        Set<Phone> phones = officeView.getPhone()
                                        .stream()
                                        .map(Phone::new)
-                                       .collect(Collectors.toList());
+                                       .collect(Collectors.toSet());
         office.setPhone(phones);
 
         officeRepository.save(office);
@@ -111,11 +111,11 @@ public class OfficeService implements ContentService<OfficeView> {
             office.setAddress(address);
         }
 
-        List<String> strPhones = officeView.getPhone();
+        Set<String> strPhones = officeView.getPhone();
         if (strPhones != null) {
-            List<Phone> phones = strPhones.stream()
+            Set<Phone> phones = strPhones.stream()
                                           .map(Phone::new)
-                                          .collect(Collectors.toList());
+                                          .collect(Collectors.toSet());
             office.setPhone(phones);
         }
 

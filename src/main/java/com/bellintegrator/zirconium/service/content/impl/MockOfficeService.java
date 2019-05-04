@@ -26,7 +26,7 @@ public class MockOfficeService implements ContentService<OfficeView> {
                 1L,
                 "Исследовательский центр",
                 "г. Москва, ул. Вербная, д. 5",
-                Arrays.asList("74957870544", "74957870545"),
+                new HashSet<>(Arrays.asList("74957870544", "74957870545")),
                 true
         );
 

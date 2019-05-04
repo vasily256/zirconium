@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OfficeView {
@@ -24,12 +24,12 @@ public class OfficeView {
     @NotNull(groups = UpdateView.class)
     private String address;
 
-    private List<String> phone;
+    private Set<String> phone;
 
     private Boolean isActive;
 
     public OfficeView(Long id, Long orgId, String name, String address,
-                      List<String> phone, Boolean isActive) {
+                      Set<String> phone, Boolean isActive) {
         this.id = id;
         this.orgId = orgId;
         this.name = name;
@@ -58,7 +58,7 @@ public class OfficeView {
         return address;
     }
 
-    public List<String> getPhone() {
+    public Set<String> getPhone() {
         return phone;
     }
 
@@ -83,7 +83,7 @@ public class OfficeView {
         this.address = address;
     }
 
-    public void setPhone(List<String> phone) {
+    public void setPhone(Set<String> phone) {
         this.phone = phone;
     }
 
