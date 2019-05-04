@@ -1,28 +1,18 @@
-/* Адрес */
-INSERT INTO Address (id, version, address)
-VALUES (1, 0, 'Россия, г. Новосибирск, ул. Почтовая, 6');
-INSERT INTO Address (id, version, address)
-VALUES (2, 0, 'Россия, г. Владивосток, ул. Приморская, 5');
-INSERT INTO Address (id, version, address)
-VALUES (3, 0, 'Россия, г. Москва, ул. Заречная, 1');
-INSERT INTO Address (id, version, address)
-VALUES (4, 0, 'Китай, г. Шанхай, ул. Пиньинь, 8');
-
 /* Организация */
-INSERT INTO Organization (id, version, address_id, name, full_name, inn, kpp, is_active)
-VALUES (1, 0, 1, 'АО НПП Позитрон', 'Акционерное общество НПП Позитрон', '2983185638', '937461004', true);
-INSERT INTO Organization (id, version, address_id, name, full_name, inn, kpp, is_active)
-VALUES (2, 0, 2, 'АО Развитие', 'Акционерное общество Развитие', '7700441507', '772225140', true);
+INSERT INTO Organization (id, version, address, name, full_name, inn, kpp, is_active)
+VALUES (1, 0, 'Россия, г. Новосибирск, ул. Почтовая, 6', 'АО НПП Позитрон', 'Акционерное общество НПП Позитрон', '2983185638', '937461004', true);
+INSERT INTO Organization (id, version, address, name, full_name, inn, kpp, is_active)
+VALUES (2, 0, 'Россия, г. Москва, ул. Заречная, 1', 'АО Развитие', 'Акционерное общество Развитие', '7700441507', '772225140', true);
 
 /* Офис */
-INSERT INTO Office (id, version, org_id, address_id, name, is_active)
-VALUES (1, 0, 1, 1, 'Научный центр', true);
-INSERT INTO Office (id, version, org_id, address_id, name, is_active)
-VALUES (2, 0, 1, 2, 'Производственный центр', true);
-INSERT INTO Office (id, version, org_id, address_id, name, is_active)
-VALUES (3, 0, 2, 3, 'Штаб-квартира', true);
-INSERT INTO Office (id, version, org_id, address_id, name, is_active)
-VALUES (4, 0, 2, 4, 'Филиал г. Шанхай', true);
+INSERT INTO Office (id, version, org_id, address, name, is_active)
+VALUES (1, 0, 1, 'Россия, г. Новосибирск, ул. Почтовая, 6', 'Научный центр', true);
+INSERT INTO Office (id, version, org_id, address, name, is_active)
+VALUES (2, 0, 1, 'Россия, г. Владивосток, ул. Приморская, 5', 'Производственный центр', true);
+INSERT INTO Office (id, version, org_id, address, name, is_active)
+VALUES (3, 0, 2, 'Россия, г. Москва, ул. Заречная, 1', 'Штаб-квартира', true);
+INSERT INTO Office (id, version, org_id, address, name, is_active)
+VALUES (4, 0, 2, 'Китай, г. Шанхай, ул. Пиньинь, 8', 'Филиал г. Шанхай', true);
 
 /* Классификатор документов */
 INSERT INTO Document_Type (id, code, name)

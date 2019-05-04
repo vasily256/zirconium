@@ -1,12 +1,3 @@
-/* Адрес */
-CREATE TABLE IF NOT EXISTS Address (
-    id               INTEGER     NOT NULL COMMENT 'Уникальный идентификатор адреса' PRIMARY KEY,
-    version          INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
-    address          VARCHAR(50) NOT NULL COMMENT 'Адрес',
-);
-COMMENT ON TABLE Address IS 'Адрес';
-CREATE INDEX IX_Address_Id ON Address(id);
-
 /* Генератор первичного ключа адреса */
 CREATE SEQUENCE IF NOT EXISTS Address_sequence START WITH 5;
 
@@ -14,13 +5,12 @@ CREATE SEQUENCE IF NOT EXISTS Address_sequence START WITH 5;
 CREATE TABLE IF NOT EXISTS Organization (
     id               INTEGER     NOT NULL COMMENT 'Уник. идентификатор организации' PRIMARY KEY,
     version          INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
-    address_id       INTEGER     NOT NULL COMMENT 'Уникальный идентификатор адреса',
     name             VARCHAR(50) NOT NULL COMMENT 'Наименование организации',
     full_name        VARCHAR(50) NOT NULL COMMENT 'Полное наименование организации',
     inn              VARCHAR(10) NOT NULL COMMENT 'ИНН, маска [0-9]',
     kpp              VARCHAR(9)  NOT NULL COMMENT 'КПП, маска [0-9]',
+    address          VARCHAR(50) NOT NULL COMMENT 'Адрес',
     is_active        BOOLEAN     NOT NULL,
-    FOREIGN KEY (address_id) REFERENCES Address(id),
 );
 COMMENT ON TABLE Organization IS 'Организация';
 CREATE INDEX IX_Organization_Id ON Organization(id);
@@ -35,11 +25,10 @@ CREATE TABLE IF NOT EXISTS Office (
     id               INTEGER     NOT NULL COMMENT 'Уник. идентификатор. офиса' PRIMARY KEY,
     version          INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
     org_id           INTEGER     NOT NULL COMMENT 'Уникальный идентификатор организации',
-    address_id       INTEGER     NOT NULL COMMENT 'Уникальный идентификатор адреса',
-    name             VARCHAR(50) NOT NULL COMMENT 'Наименование офиса',
-    is_active        BOOLEAN     NOT NULL,
+    name             VARCHAR(50)          COMMENT 'Наименование офиса',
+    address          VARCHAR(50)          COMMENT 'Адрес',
+    is_active        BOOLEAN,
     FOREIGN KEY (org_id) REFERENCES Organization(id),
-    FOREIGN KEY (address_id) REFERENCES Address(id),
 );
 COMMENT ON TABLE Office IS 'Офис';
 CREATE INDEX IX_Office_Id ON Office (id);
@@ -100,7 +89,7 @@ CREATE TABLE IF NOT EXISTS Document (
     doc_type_id      INTEGER     NOT NULL COMMENT 'Уникальный идентификатор вида документа',
     doc_number       VARCHAR(50) NOT NULL COMMENT 'Номер документа',
     doc_date         DATE        NOT NULL COMMENT 'Дата документа',
-    is_identified    BOOLEAN     NOT NULL,
+    is_identified    BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (doc_type_id) REFERENCES Document_Type(id),
 );

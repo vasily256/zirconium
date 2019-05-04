@@ -1,7 +1,6 @@
 package com.bellintegrator.zirconium.service.content.impl;
 
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
-import com.bellintegrator.zirconium.model.Address;
 import com.bellintegrator.zirconium.model.Office;
 import com.bellintegrator.zirconium.model.Phone;
 import com.bellintegrator.zirconium.model.mapper.MapperFacade;
@@ -38,7 +37,6 @@ public class OfficeService implements ContentService<OfficeView> {
 
         mapperFacade.getMapperFactory()
                 .classMap(Office.class, OfficeView.class)
-                .fieldAToB("address.address", "address")
                 .fieldAToB("phone{phone}", "phone{}")
                 .byDefault()
                 .register();
@@ -89,7 +87,7 @@ public class OfficeService implements ContentService<OfficeView> {
         office.setName(name);
 
         String address = officeView.getAddress();
-        office.getAddress().setAddress(address);
+        office.setAddress(address);
 
         List<Phone> phones = officeView.getPhone()
                                        .stream()
@@ -110,7 +108,7 @@ public class OfficeService implements ContentService<OfficeView> {
 
         String address = officeView.getAddress();
         if (address != null) {
-            office.setAddress(new Address(address));
+            office.setAddress(address);
         }
 
         List<String> strPhones = officeView.getPhone();

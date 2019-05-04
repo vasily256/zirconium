@@ -19,14 +19,7 @@ public class Office {
 
     private String name;
 
-    @ManyToOne(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinColumn(name = "address_id")
-    private Address address;
+    private String address;
 
     @ManyToMany(
             cascade = {
@@ -83,11 +76,11 @@ public class Office {
         this.name = name;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

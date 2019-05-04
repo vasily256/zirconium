@@ -28,9 +28,14 @@ public class OfficeSpecification implements Specification<Office> {
         Long orgId = officeView.getOrgId();
         predicates.add(criteriaBuilder.equal(root.get("orgId"), orgId));
 
-        Boolean isActive = officeView.isActive();
-        if (isActive != null) {
-            predicates.add(criteriaBuilder.equal(root.get("isActive"), isActive));
+        String name = officeView.getName();
+        if (name != null) {
+            predicates.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+        }
+
+        String address = officeView.getAddress();
+        if (address != null) {
+            predicates.add(criteriaBuilder.equal(root.get("address"), address));
         }
 
         List<String> phones = officeView.getPhone();
@@ -38,9 +43,9 @@ public class OfficeSpecification implements Specification<Office> {
             predicates.add(phone.get("phone").in(phones));
         }
 
-        String name = officeView.getName();
-        if (name != null) {
-            predicates.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+        Boolean isActive = officeView.isActive();
+        if (isActive != null) {
+            predicates.add(criteriaBuilder.equal(root.get("isActive"), isActive));
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
