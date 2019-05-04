@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
-import java.util.List;
 
 public class OfficeSpecification implements Specification<Office> {
 
@@ -28,6 +27,8 @@ public class OfficeSpecification implements Specification<Office> {
                                  CriteriaQuery<?> criteriaQuery,
                                  CriteriaBuilder criteriaBuilder) {
 
+        criteriaQuery.distinct(true);
+
         if (value == null) {
             return null;
         }
@@ -36,7 +37,7 @@ public class OfficeSpecification implements Specification<Office> {
             return criteriaBuilder.equal(root.get(key), value);
         } else if (operator == Operator.IN) {
             Join<Office, Phone> phone = root.join("phone");
-            return phone.get("phone").in((List) value);
+            return phone.get("phone").in(value);
         } else if (value instanceof String && operator == Operator.LIKE) {
             return criteriaBuilder.like(root.get(key), "%" + value + "%");
         } else {
