@@ -112,11 +112,6 @@ public class OfficeService implements ContentService<OfficeView> {
     public long save(OfficeView officeView) {
         Office office = mapperFacade.map(officeView, Office.class);
 
-        String address = officeView.getAddress();
-        if (address != null) {
-            office.setAddress(address);
-        }
-
         Set<String> strPhones = officeView.getPhone();
         if (strPhones != null) {
             Set<Phone> phones = strPhones.stream()
