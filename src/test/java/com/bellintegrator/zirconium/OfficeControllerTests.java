@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -33,6 +35,8 @@ import static junit.framework.TestCase.assertTrue;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OfficeControllerTests {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@LocalServerPort
 	private int port;
 
@@ -48,9 +52,9 @@ public class OfficeControllerTests {
 	static OfficeView office = new OfficeView(
 			5L,
 			1L,
-			"Отдел тестирования",
+			"Центр тестирования",
 			"г. Москва, ул. Озёрная, д. 1",
-			new HashSet<>(Arrays.asList("74957870538")),
+			new HashSet<>(Arrays.asList("74957870538", "79457870540")),
 			true
 	);
 
@@ -92,15 +96,15 @@ public class OfficeControllerTests {
 		JSONAssert.assertEquals(gson.toJson(errorResponseBody), response.getBody(), false);
 	}
 
-	// Запрос списка офисов
-//    @Test
+	// Запрос списка офисов по заданным критериям
+    @Test
 	public void testListOffice() throws JSONException {
 		OfficeView office2 = new OfficeView(
 				1L,
 				1L,
-				"Исследовательский центр",
-				"г. Москва, ул. Вербная, д. 5",
-				new HashSet<>(Arrays.asList("74957870544", "74957870545")),
+				"Научный центр",
+				"Россия, г. Новосибирск, ул. Почтовая, 6",
+				new HashSet<>(Arrays.asList("77903332211")),
 				true
 		);
 
@@ -108,7 +112,16 @@ public class OfficeControllerTests {
 		list.add(office);
 		list.add(office2);
 
-		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
+		OfficeView officeSearch = new OfficeView(
+				null,
+				1L,
+				"ентр", // фрагмент наименования
+				null,
+				new HashSet<>(Arrays.asList("77903332211", "74957870538")),
+                null
+		);
+
+		HttpEntity<OfficeView> entity = new HttpEntity<>(officeSearch, headers);
 		ResponseEntity<String> response = restTemplate.exchange(
 				createURLWithPort("/list"), HttpMethod.POST, entity, String.class);
 
