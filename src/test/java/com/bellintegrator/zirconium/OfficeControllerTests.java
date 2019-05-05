@@ -84,7 +84,7 @@ public class OfficeControllerTests {
 	}
 
 	// Попытка запроса данных о несуществующем офисе id 6
-    @Test
+	@Test
 	public void testGetOffice2() throws JSONException {
 		HttpEntity<OfficeView> entity = new HttpEntity<>(null, headers);
 
@@ -97,7 +97,7 @@ public class OfficeControllerTests {
 	}
 
 	// Запрос списка офисов по заданным критериям
-    @Test
+	@Test
 	public void testListOffice() throws JSONException {
 		OfficeView office2 = new OfficeView(
 				1L,
@@ -118,7 +118,7 @@ public class OfficeControllerTests {
 				"ентр", // фрагмент наименования
 				null,
 				new HashSet<>(Arrays.asList("77903332211", "74957870538")),
-                null
+				null
 		);
 
 		HttpEntity<OfficeView> entity = new HttpEntity<>(officeSearch, headers);
@@ -131,17 +131,17 @@ public class OfficeControllerTests {
 	// Обновление сведений об офисе id 5
 	@Test
 	public void testUpdateOffice1() throws JSONException {
-        office.setId(5L);
-        office.setName("Отдел разработки");
-        office.setAddress("г. Москва, Рублёвское ш., д. 29");
-        office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
+		office.setId(5L);
+		office.setName("Отдел разработки");
+		office.setAddress("г. Москва, Рублёвское ш., д. 29");
+		office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
 
-        HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
+		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/update"), HttpMethod.POST, entity, String.class);
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/update"), HttpMethod.POST, entity, String.class);
 
-        JSONAssert.assertEquals(gson.toJson(SUCCESS_RESPONSE_BODY), response.getBody(), false);
+		JSONAssert.assertEquals(gson.toJson(SUCCESS_RESPONSE_BODY), response.getBody(), false);
 	}
 
 	// Попытка обновления сведений о несуществующем офисе id 6
@@ -167,6 +167,6 @@ public class OfficeControllerTests {
 	}
 
 	static <T> JSONResponseWrapper.Wrapper wrap(T o) {
-	    return new JSONResponseWrapper.Wrapper<>(o);
+		return new JSONResponseWrapper.Wrapper<>(o);
 	}
 }
