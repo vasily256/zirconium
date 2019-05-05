@@ -7,13 +7,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ZirconiumMapperFactory extends AbstractFactoryBean<MapperFactory> {
+    public ZirconiumMapperFactory() {
+        setSingleton(false);
+    }
+
     @Override
     public Class<?> getObjectType() {
         return MapperFactory.class;
     }
 
     @Override
-    protected MapperFactory createInstance() throws Exception {
+    protected MapperFactory createInstance() {
         return new DefaultMapperFactory.Builder().build();
     }
 }

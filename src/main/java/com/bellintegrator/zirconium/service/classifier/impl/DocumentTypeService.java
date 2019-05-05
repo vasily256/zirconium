@@ -1,7 +1,7 @@
 package com.bellintegrator.zirconium.service.classifier.impl;
 
 import com.bellintegrator.zirconium.model.DocumentType;
-import com.bellintegrator.zirconium.model.mapper.MapperFacade;
+import com.bellintegrator.zirconium.model.mapper.Mapper;
 import com.bellintegrator.zirconium.repository.DocumentTypeRepository;
 import com.bellintegrator.zirconium.service.classifier.ClassifierService;
 import com.bellintegrator.zirconium.view.DocumentTypeView;
@@ -14,19 +14,19 @@ import java.util.List;
 public class DocumentTypeService implements ClassifierService<DocumentTypeView> {
 
     private final DocumentTypeRepository documentRepository;
-    private final MapperFacade mapperFacade;
+    private final Mapper<DocumentType, DocumentTypeView> mapper;
 
     @Autowired
     public DocumentTypeService(DocumentTypeRepository documentRepository,
-                               MapperFacade mapperFacade) {
+                               Mapper<DocumentType, DocumentTypeView> mapper) {
 
         this.documentRepository = documentRepository;
-        this.mapperFacade = mapperFacade;
+        this.mapper = mapper;
     }
 
     @Override
     public List<DocumentTypeView> list() {
         List<DocumentType> documents =  documentRepository.findAll();
-        return mapperFacade.mapAsList(documents, DocumentTypeView.class);
+        return mapper.toViewList(documents);
     }
 }
