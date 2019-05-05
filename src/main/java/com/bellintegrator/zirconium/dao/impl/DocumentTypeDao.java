@@ -4,11 +4,11 @@ import com.bellintegrator.zirconium.dao.ClassifierDao;
 import com.bellintegrator.zirconium.dao.DocumentTypeRepository;
 import com.bellintegrator.zirconium.model.DocumentType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Service
+@Repository
 public class DocumentTypeDao implements ClassifierDao<DocumentType> {
     private final DocumentTypeRepository documentTypeRepository;
 
