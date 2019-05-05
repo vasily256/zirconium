@@ -4,11 +4,11 @@ import com.bellintegrator.zirconium.dao.ClassifierDao;
 import com.bellintegrator.zirconium.dao.CountryRepository;
 import com.bellintegrator.zirconium.model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Service
+@Repository
 public class CountryDao implements ClassifierDao<Country> {
     private final CountryRepository countryRepository;
 
