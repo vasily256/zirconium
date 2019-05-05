@@ -6,6 +6,7 @@ import com.bellintegrator.zirconium.model.Phone;
 import com.bellintegrator.zirconium.model.mapper.MapperFacade;
 import com.bellintegrator.zirconium.repository.OfficeRepository;
 import com.bellintegrator.zirconium.repository.OfficeSpecification;
+import com.bellintegrator.zirconium.repository.PhoneRepository;
 import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OfficeView;
 import org.slf4j.Logger;
@@ -24,15 +25,18 @@ import java.util.stream.Collectors;
 public class OfficeService implements ContentService<OfficeView> {
 
     private final OfficeRepository officeRepository;
+    private final PhoneRepository phoneRepository;
     private final MapperFacade mapperFacade;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public OfficeService(OfficeRepository officeRepository,
+                         PhoneRepository phoneRepository,
                          MapperFacade mapperFacade) {
 
         this.officeRepository = officeRepository;
+        this.phoneRepository = phoneRepository;
         this.mapperFacade = mapperFacade;
 
         mapperFacade.getMapperFactory()
@@ -89,10 +93,12 @@ public class OfficeService implements ContentService<OfficeView> {
         String address = officeView.getAddress();
         office.setAddress(address);
 
+        Set<Phone> oldPhones = office.getPhone();
+        phoneRepository.deleteAll(oldPhones);
         Set<Phone> phones = officeView.getPhone()
-                                       .stream()
-                                       .map(Phone::new)
-                                       .collect(Collectors.toSet());
+                                      .stream()
+                                      .map(Phone::new)
+                                      .collect(Collectors.toSet());
         office.setPhone(phones);
 
         officeRepository.save(office);
