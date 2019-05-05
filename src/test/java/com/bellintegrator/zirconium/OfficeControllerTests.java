@@ -73,7 +73,7 @@ public class OfficeControllerTests {
 	}
 
 	// Запрос данных об офисе id 5
-	@Test //провал
+	@Test
 	public void testGetOffice1() throws JSONException {
 		HttpEntity<OfficeView> entity = new HttpEntity<>(null, headers);
 
@@ -84,7 +84,7 @@ public class OfficeControllerTests {
 	}
 
 	// Попытка запроса данных о несуществующем офисе id 6
-	@Test
+    @Test
 	public void testGetOffice2() throws JSONException {
 		HttpEntity<OfficeView> entity = new HttpEntity<>(null, headers);
 
@@ -131,17 +131,17 @@ public class OfficeControllerTests {
 	// Обновление сведений об офисе id 5
 	@Test
 	public void testUpdateOffice1() throws JSONException {
-		office.setId(5L);
-	    office.setName("Отдел разработки");
+        office.setId(5L);
+        office.setName("Отдел разработки");
         office.setAddress("г. Москва, Рублёвское ш., д. 29");
-		office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
+        office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
 
-		HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
+        HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
 
-		ResponseEntity<String> response = restTemplate.exchange(
-				createURLWithPort("/update"), HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("/update"), HttpMethod.POST, entity, String.class);
 
-		JSONAssert.assertEquals(gson.toJson(SUCCESS_RESPONSE_BODY), response.getBody(), false);
+        JSONAssert.assertEquals(gson.toJson(SUCCESS_RESPONSE_BODY), response.getBody(), false);
 	}
 
 	// Попытка обновления сведений о несуществующем офисе id 6
