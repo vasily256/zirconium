@@ -1,4 +1,4 @@
-package com.bellintegrator.zirconium.repository;
+package com.bellintegrator.zirconium.dao;
 
 import com.bellintegrator.zirconium.model.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
