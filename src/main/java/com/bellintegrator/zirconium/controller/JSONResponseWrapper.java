@@ -7,6 +7,9 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+/**
+ * Обработчик ответов с использованием класса-обёртки
+ */
 @ControllerAdvice
 public class JSONResponseWrapper implements ResponseBodyAdvice {
 
