@@ -1,5 +1,8 @@
 package com.bellintegrator.zirconium.controller;
 
+/**
+ * Класс-обёртка сообщений об ошибках
+ */
 public class ErrorResponseBody implements ResponseBodyMarker {
     private final String error;
 
