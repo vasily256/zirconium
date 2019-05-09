@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Сервис получения справочника видов документов
+ */
 @Service("docs")
 public class DocumentTypeService implements ClassifierService<DocumentTypeView> {
 
@@ -24,6 +27,9 @@ public class DocumentTypeService implements ClassifierService<DocumentTypeView> 
         this.mapper = mapper;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<DocumentTypeView> list() {
         List<DocumentType> documents =  dao.findAll();

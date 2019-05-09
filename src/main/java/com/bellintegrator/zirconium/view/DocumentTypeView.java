@@ -1,5 +1,8 @@
 package com.bellintegrator.zirconium.view;
 
+/**
+ * Вид документа
+ */
 public class DocumentTypeView {
     private String code;
 

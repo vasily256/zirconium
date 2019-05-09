@@ -2,6 +2,9 @@ package com.bellintegrator.zirconium.model;
 
 import javax.persistence.*;
 
+/**
+ * Страна мира
+ */
 @Entity
 public class Country {
     @Id

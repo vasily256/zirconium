@@ -3,6 +3,9 @@ package com.bellintegrator.zirconium.model;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Офис
+ */
 @Entity
 public class Office {
 

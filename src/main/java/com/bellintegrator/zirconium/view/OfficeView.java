@@ -9,6 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+/**
+ * Офис
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OfficeView {
 

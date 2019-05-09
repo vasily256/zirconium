@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Сервис получения справочника стран мира
+ */
 @Service("countries")
 public class CountryService implements ClassifierService<CountryView> {
 
@@ -24,6 +27,9 @@ public class CountryService implements ClassifierService<CountryView> {
         this.mapper = mapper;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<CountryView> list() {
         List<Country> countries =  dao.findAll();

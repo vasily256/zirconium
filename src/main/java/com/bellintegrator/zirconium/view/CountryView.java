@@ -1,5 +1,8 @@
 package com.bellintegrator.zirconium.view;
 
+/**
+ * Страна мира
+ */
 public class CountryView {
     private String code;
 

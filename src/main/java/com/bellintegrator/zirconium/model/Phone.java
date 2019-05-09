@@ -2,6 +2,9 @@ package com.bellintegrator.zirconium.model;
 
 import javax.persistence.*;
 
+/**
+ * Номер телефона
+ */
 @Entity
 public class Phone {
 

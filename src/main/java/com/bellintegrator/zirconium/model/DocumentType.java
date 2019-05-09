@@ -2,6 +2,9 @@ package com.bellintegrator.zirconium.model;
 
 import javax.persistence.*;
 
+/**
+ * Вид документа
+ */
 @Entity
 @Table(name = "Document_Type")
 public class DocumentType {
