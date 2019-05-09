@@ -3,6 +3,8 @@ INSERT INTO Organization (id, version, address, name, full_name, inn, kpp, is_ac
 VALUES (1, 0, 'Россия, г. Новосибирск, ул. Почтовая, 6', 'АО НПП Позитрон', 'Акционерное общество НПП Позитрон', '2983185638', '937461004', true);
 INSERT INTO Organization (id, version, address, name, full_name, inn, kpp, is_active)
 VALUES (2, 0, 'Россия, г. Москва, ул. Заречная, 1', 'АО Развитие', 'Акционерное общество Развитие', '7700441507', '772225140', true);
+INSERT INTO Organization (id, version, address, name, full_name, inn, kpp, is_active)
+VALUES (3, 0, 'Россия, г. Москва, проспект Вернадского, 86', 'АО ТТ', 'Акционерное общество Тонкие технологии', '7782439282', '770984285', true);
 
 /* Офис */
 INSERT INTO Office (id, version, org_id, address, name, is_active)
@@ -13,6 +15,10 @@ INSERT INTO Office (id, version, org_id, address, name, is_active)
 VALUES (3, 0, 2, 'Россия, г. Москва, ул. Заречная, 1', 'Штаб-квартира', true);
 INSERT INTO Office (id, version, org_id, address, name, is_active)
 VALUES (4, 0, 2, 'Китай, г. Шанхай, ул. Пиньинь, 8', 'Филиал г. Шанхай', true);
+INSERT INTO Office (id, version, org_id, address, name, is_active)
+VALUES (5, 0, 3, 'Россия, г. Москва, проспект Вернадского, 86', 'Филиал 1', true);
+INSERT INTO Office (id, version, org_id, address, name, is_active)
+VALUES (6, 0, 3, 'Россия, г. Москва, ул. Малая Пироговская, 1', 'Филиал 2', true);
 
 /* Классификатор документов */
 INSERT INTO Document_Type (id, code, name)
@@ -115,6 +121,8 @@ INSERT INTO Phone (id, version, phone)
 VALUES (14, 0, '75307133330');
 INSERT INTO Phone (id, version, phone)
 VALUES (15, 0, '86663753620');
+INSERT INTO Phone (id, version, phone)
+VALUES (16, 0, '74994444444');
 
 /* Организация - телефон */
 INSERT INTO Organization_Phone (org_id, phone_id)
@@ -135,6 +143,10 @@ INSERT INTO Office_Phone (office_id, phone_id)
 VALUES (3, 6);
 INSERT INTO Office_Phone (office_id, phone_id)
 VALUES (4, 7);
+INSERT INTO Office_Phone (office_id, phone_id)
+VALUES (5, 16);
+INSERT INTO Office_Phone (office_id, phone_id)
+VALUES (6, 16);
 
 /* Пользователь - телефон */
 INSERT INTO User_Phone (user_id, phone_id)

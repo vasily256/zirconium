@@ -35,7 +35,7 @@ CREATE INDEX IX_Office_Id ON Office (id);
 CREATE INDEX IX_Office_Org_id ON Office (org_id);
 
 /* Генератор первичного ключа офиса */
-CREATE SEQUENCE IF NOT EXISTS Office_sequence START WITH 5;
+CREATE SEQUENCE IF NOT EXISTS Office_sequence START WITH 7;
 
 /* Страна мира */
 CREATE TABLE IF NOT EXISTS Country (
@@ -107,7 +107,7 @@ COMMENT ON TABLE Phone IS 'Телефонный номер';
 CREATE INDEX IX_Phone_Id ON Phone (id);
 
 /* Генератор первичного ключа номера телефона */
-CREATE SEQUENCE IF NOT EXISTS Phone_sequence START WITH 16;
+CREATE SEQUENCE IF NOT EXISTS Phone_sequence START WITH 17;
 
 /* Join-таблица для связи Organization и Phone */
 CREATE TABLE IF NOT EXISTS Organization_Phone (

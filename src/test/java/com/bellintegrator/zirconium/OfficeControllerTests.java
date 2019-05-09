@@ -50,7 +50,7 @@ public class OfficeControllerTests {
 	private Gson gson;
 
 	static OfficeView office = new OfficeView(
-			5L,
+			7L,
 			1L,
 			"Центр тестирования",
 			"г. Москва, ул. Озёрная, д. 1",
@@ -68,7 +68,7 @@ public class OfficeControllerTests {
 
 		String location = response.getHeaders().get(HttpHeaders.LOCATION).get(0);
 
-		assertTrue(location.contains("/5"));
+		assertTrue(location.contains("/7"));
 		JSONAssert.assertEquals(gson.toJson(SUCCESS_RESPONSE_BODY), response.getBody(), false);
 	}
 
@@ -78,7 +78,7 @@ public class OfficeControllerTests {
 		HttpEntity<OfficeView> entity = new HttpEntity<>(null, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				createURLWithPort("/5"), HttpMethod.GET, entity, String.class);
+				createURLWithPort("/7"), HttpMethod.GET, entity, String.class);
 
 		JSONAssert.assertEquals(gson.toJson(wrap(office)), response.getBody(), false);
 	}
@@ -89,9 +89,9 @@ public class OfficeControllerTests {
 		HttpEntity<OfficeView> entity = new HttpEntity<>(null, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				createURLWithPort("/6"), HttpMethod.GET, entity, String.class);
+				createURLWithPort("/8"), HttpMethod.GET, entity, String.class);
 
-		ErrorResponseBody errorResponseBody = new ErrorResponseBody("office id 6 not found");
+		ErrorResponseBody errorResponseBody = new ErrorResponseBody("office id 8 not found");
 
 		JSONAssert.assertEquals(gson.toJson(errorResponseBody), response.getBody(), false);
 	}
@@ -131,7 +131,7 @@ public class OfficeControllerTests {
 	// Обновление сведений об офисе id 5
 	@Test
 	public void testUpdateOffice1() throws JSONException {
-		office.setId(5L);
+		office.setId(7L);
 		office.setName("Отдел разработки");
 		office.setAddress("г. Москва, Рублёвское ш., д. 29");
 		office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
@@ -147,7 +147,7 @@ public class OfficeControllerTests {
 	// Попытка обновления сведений о несуществующем офисе id 6
 	@Test
 	public void testUpdateOffice2() throws JSONException {
-		office.setId(6L);
+		office.setId(8L);
 		office.setName("Отдел разработки");
 		office.setAddress("г. Москва, Рублёвское ш., д. 29");
 		office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
@@ -157,7 +157,7 @@ public class OfficeControllerTests {
 		ResponseEntity<String> response = restTemplate.exchange(
 				createURLWithPort("/update"), HttpMethod.POST, entity, String.class);
 
-		ErrorResponseBody errorResponseBody = new ErrorResponseBody("can't update: office id 6 not found");
+		ErrorResponseBody errorResponseBody = new ErrorResponseBody("can't update: office id 8 not found");
 
 		JSONAssert.assertEquals(gson.toJson(errorResponseBody), response.getBody(), false);
 	}
