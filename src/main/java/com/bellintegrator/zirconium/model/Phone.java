@@ -19,12 +19,12 @@ public class Phone {
 
     private String phone;
 
+    @ManyToMany(mappedBy = "phone", fetch = FetchType.LAZY)
+    private Set<Office> offices;
+
     protected Phone() {
         super();
     }
-
-    @ManyToMany(mappedBy = "phone", fetch = FetchType.LAZY)
-    private Set<Office> offices;
 
     public Phone(String phone) {
         this.phone = phone;
