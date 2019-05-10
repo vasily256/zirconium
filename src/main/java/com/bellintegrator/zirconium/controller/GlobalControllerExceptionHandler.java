@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * Обработчик исключений для формирования
  * соответствующих ответов сервера
@@ -34,7 +37,9 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 
     @ExceptionHandler(Throwable.class)
     protected ResponseEntity<?> handleAllExceptions(Throwable ex) {
-        ErrorResponseBody body = new ErrorResponseBody(ex.getMessage());
+        StringWriter strWriter = new StringWriter();
+        ex.printStackTrace(new PrintWriter(strWriter));
+        ErrorResponseBody body = new ErrorResponseBody(strWriter.toString());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
