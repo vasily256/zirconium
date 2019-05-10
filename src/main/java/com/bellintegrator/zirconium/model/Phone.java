@@ -1,6 +1,7 @@
 package com.bellintegrator.zirconium.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Номер телефона
@@ -21,6 +22,9 @@ public class Phone {
     protected Phone() {
         super();
     }
+
+    @ManyToMany(mappedBy = "phone", fetch = FetchType.LAZY)
+    private Set<Office> offices;
 
     public Phone(String phone) {
         this.phone = phone;

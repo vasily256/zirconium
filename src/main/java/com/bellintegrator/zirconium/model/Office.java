@@ -28,8 +28,7 @@ public class Office {
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
-            },
-            fetch = FetchType.LAZY
+            }
     )
     @JoinTable(
             name = "Office_Phone",
