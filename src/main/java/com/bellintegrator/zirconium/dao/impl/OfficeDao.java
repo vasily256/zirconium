@@ -63,7 +63,7 @@ public class OfficeDao implements ContentDao<Office> {
 
         Set<Phone> phones = office.getPhone();
         if (phones != null) {
-            phoneRepository.deleteAll(officeDb.getPhone());
+            officeDb.getPhone().clear();
             officeDb.setPhone(office.getPhone());
         }
 
