@@ -1,6 +1,7 @@
 package com.bellintegrator.zirconium.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -31,6 +32,9 @@ public class Phone {
     }
 
     public Set<Office> getOffices() {
+        if (offices == null) {
+            offices = new HashSet<>();
+        }
         return offices;
     }
 
