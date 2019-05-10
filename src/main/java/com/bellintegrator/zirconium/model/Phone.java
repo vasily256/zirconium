@@ -30,6 +30,10 @@ public class Phone {
         this.phone = phone;
     }
 
+    public Set<Office> getOffices() {
+        return offices;
+    }
+
     public long getId() {
         return id;
     }
