@@ -12,42 +12,54 @@ import java.util.List;
 @Service
 public class OfficeMapper implements Mapper<Office, OfficeView> {
 
-    private final MapperFacade mapperFacade;
+    private final MapperFacade fullMapperFacade;
+    private final MapperFacade shortMapperFacade;
 
     @Autowired
-    public OfficeMapper(MapperFactory mapperFactory,
+    public OfficeMapper(MapperFactory mapperFactory1,
+                        MapperFactory mapperFactory2,
                         PhoneConverter converter) {
-        mapperFactory
+        mapperFactory1
             .getConverterFactory()
             .registerConverter("PhoneToPhone", converter);
 
-        mapperFactory
+        mapperFactory1
             .classMap(Office.class, OfficeView.class)
             .fieldAToB("phone{phone}", "phone{}")
             .fieldMap("phone", "phone").converter("PhoneToPhone").bToA().add()
             .byDefault()
             .register();
 
-        mapperFacade = mapperFactory.getMapperFacade();
+        fullMapperFacade = mapperFactory1.getMapperFacade();
+
+        mapperFactory2
+            .classMap(Office.class, OfficeView.class)
+            .exclude("orgId")
+            .exclude("address")
+            .exclude("phone")
+            .byDefault()
+            .register();
+
+        shortMapperFacade = mapperFactory2.getMapperFacade();
     }
 
     @Override
     public Office toEntity(OfficeView officeView) {
-        return mapperFacade.map(officeView, Office.class);
+        return fullMapperFacade.map(officeView, Office.class);
     }
 
     @Override
     public OfficeView toView(Office office) {
-        return mapperFacade.map(office, OfficeView.class);
+        return fullMapperFacade.map(office, OfficeView.class);
     }
 
     @Override
     public List<Office> toEntityList(Iterable<OfficeView> views) {
-        return mapperFacade.mapAsList(views, Office.class);
+        return fullMapperFacade.mapAsList(views, Office.class);
     }
 
     @Override
     public List<OfficeView> toViewList(Iterable<Office> views) {
-        return mapperFacade.mapAsList(views, OfficeView.class);
+        return shortMapperFacade.mapAsList(views, OfficeView.class);
     }
 }
