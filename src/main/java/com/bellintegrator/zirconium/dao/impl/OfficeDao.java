@@ -8,6 +8,8 @@ import com.bellintegrator.zirconium.model.Phone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -16,10 +18,12 @@ import java.util.Set;
 @Repository
 public class OfficeDao implements ContentDao<Office> {
     private final OfficeRepository officeRepository;
+    private final EntityManager entityManager;
 
     @Autowired
-    public OfficeDao(OfficeRepository officeRepository) {
+    public OfficeDao(OfficeRepository officeRepository, EntityManager entityManager) {
         this.officeRepository = officeRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -61,13 +65,15 @@ public class OfficeDao implements ContentDao<Office> {
         Set<Phone> newPhones = office.getPhone();
         Set<Phone> currentPhones = new HashSet<>(currentOffice.getPhone());
         if (newPhones != null) {
-            currentOffice.getPhone().clear();
-            currentOffice.getPhone().addAll(newPhones);
-            for (Phone phone : currentPhones) {
-                phone.getOffices().remove(currentOffice);
-            }
+            currentOffice.setPhone(newPhones);
         }
 
-        officeRepository.save(currentOffice);
+        officeRepository.saveAndFlush(currentOffice);
+
+        Query query = entityManager.createNativeQuery(CustomQueries.DELETE_UNUSED_PHONES);
+        for (Phone phone : currentPhones) {
+            query.setParameter("id", phone.getId());
+        }
+        query.executeUpdate();
     }
 }
