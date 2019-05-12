@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS Country (
 );
 COMMENT ON TABLE Country IS 'Страна мира';
 CREATE INDEX IX_Country_Id ON Country(id);
+CREATE INDEX IX_Country_Code ON Country(code);
 
 /* Генератор первичного ключа страны (на случай актуализации справочника стран мира) */
 CREATE SEQUENCE IF NOT EXISTS Country_sequence START WITH 250;
@@ -57,6 +58,7 @@ CREATE TABLE IF NOT EXISTS Document_Type (
 );
 COMMENT ON TABLE Document_Type IS 'Документ';
 CREATE INDEX IX_Document_Type_Id ON Document_Type(id);
+CREATE INDEX IX_Document_Type_Code ON Document_Type(code);
 
 /* Генератор первичного ключа вида документа (на случай актуализации справочника видов документа) */
 CREATE SEQUENCE IF NOT EXISTS Document_Type_sequence START WITH 16;
@@ -119,6 +121,7 @@ CREATE TABLE IF NOT EXISTS Organization_Phone (
 );
 COMMENT ON TABLE Organization_Phone IS 'Join-таблица для связи Organization и Phone';
 CREATE INDEX IX_Phone_Organization_Id ON Organization_Phone (org_id);
+CREATE INDEX IX_Organization_Phone_Id ON Organization_Phone (phone_id);
 
 /* Join-таблица для связи Office и Phone */
 CREATE TABLE IF NOT EXISTS Office_Phone (
@@ -130,6 +133,7 @@ CREATE TABLE IF NOT EXISTS Office_Phone (
 );
 COMMENT ON TABLE Office_Phone IS 'Join-таблица для связи Office и Phone';
 CREATE INDEX IX_Phone_Office_Id ON Office_Phone (office_id);
+CREATE INDEX IX_Office_Phone_Id ON Office_Phone (phone_id);
 
 /* Join-таблица для связи User и Phone */
 CREATE TABLE IF NOT EXISTS User_Phone (
@@ -141,3 +145,4 @@ CREATE TABLE IF NOT EXISTS User_Phone (
 );
 COMMENT ON TABLE User_Phone IS 'Join-таблица для связи User и Phone';
 CREATE INDEX IX_Phone_User_Id ON User_Phone (user_id);
+CREATE INDEX IX_User_Phone_Id ON User_Phone (phone_id);
