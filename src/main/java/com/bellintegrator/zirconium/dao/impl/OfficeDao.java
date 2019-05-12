@@ -62,10 +62,10 @@ public class OfficeDao implements ContentDao<Office> {
         currentOffice.setAddress(office.getAddress());
         currentOffice.setActive(office.isActive());
 
-        Set<Phone> newPhones = office.getPhone();
-        Set<Phone> currentPhones = new HashSet<>(currentOffice.getPhone());
+        Set<Phone> newPhones = office.getPhones();
+        Set<Phone> currentPhones = new HashSet<>(currentOffice.getPhones());
         if (newPhones != null) {
-            currentOffice.setPhone(newPhones);
+            currentOffice.setPhones(newPhones);
         }
 
         officeRepository.saveAndFlush(currentOffice);

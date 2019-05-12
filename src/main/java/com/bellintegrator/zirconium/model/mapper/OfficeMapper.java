@@ -25,8 +25,8 @@ public class OfficeMapper implements Mapper<Office, OfficeView> {
 
         mapperFactory1
             .classMap(Office.class, OfficeView.class)
-            .fieldAToB("phone{phone}", "phone{}")
-            .fieldMap("phone", "phone").converter("PhoneToPhone").bToA().add()
+            .fieldAToB("phones{phone}", "phone{}")
+            .fieldMap("phones", "phone").converter("PhoneToPhone").bToA().add()
             .byDefault()
             .register();
 
@@ -36,7 +36,7 @@ public class OfficeMapper implements Mapper<Office, OfficeView> {
             .classMap(Office.class, OfficeView.class)
             .exclude("orgId")
             .exclude("address")
-            .exclude("phone")
+            .exclude("phones")
             .byDefault()
             .register();
 

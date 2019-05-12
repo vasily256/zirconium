@@ -23,7 +23,7 @@ public class OfficeSpecification implements Specification<Office> {
                                  CriteriaBuilder criteriaBuilder) {
 
         criteriaQuery.distinct(true);
-        Join<Office, Phone> phone = root.join("phone", JoinType.LEFT);
+        Join<Office, Phone> phone = root.join("phones", JoinType.LEFT);
         List<Predicate> predicates = new ArrayList<>();
 
         Long orgId = office.getOrgId();
@@ -39,7 +39,7 @@ public class OfficeSpecification implements Specification<Office> {
             predicates.add(criteriaBuilder.equal(root.get("address"), address));
         }
 
-        Set<Phone> phones = office.getPhone();
+        Set<Phone> phones = office.getPhones();
         if (phones != null) {
             Set<String> strPhones = phones.stream()
                                           .map(Phone::getPhone)

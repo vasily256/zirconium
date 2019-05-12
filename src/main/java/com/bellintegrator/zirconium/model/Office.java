@@ -35,7 +35,7 @@ public class Office {
             joinColumns = @JoinColumn(name = "office_id"),
             inverseJoinColumns = @JoinColumn(name = "phone_id")
     )
-    private Set<Phone> phone;
+    private Set<Phone> phones;
 
     @Column(name = "is_active")
     private Boolean isActive;
@@ -91,12 +91,12 @@ public class Office {
         this.address = address;
     }
 
-    public Set<Phone> getPhone() {
-        return phone;
+    public Set<Phone> getPhones() {
+        return phones;
     }
 
-    public void setPhone(Set<Phone> phone) {
-        this.phone = phone;
+    public void setPhones(Set<Phone> phones) {
+        this.phones = phones;
     }
 
     public Boolean isActive() {
@@ -115,7 +115,7 @@ public class Office {
                        ", orgId=" + orgId +
                        ", name='" + name + '\'' +
                        ", address=" + address +
-                       ", phone=" + phone +
+                       ", phone=" + phones +
                        ", isActive=" + isActive +
                        '}';
     }
