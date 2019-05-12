@@ -20,7 +20,6 @@ public class Document {
     private String docNumber;
 
     @Column(name = "doc_date")
-    @Temporal(TemporalType.DATE)
     private Date docDate;
 
     @Column(name = "is_identified")
