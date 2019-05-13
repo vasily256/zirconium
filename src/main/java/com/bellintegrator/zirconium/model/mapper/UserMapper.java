@@ -12,50 +12,69 @@ import java.util.List;
 @Service
 public class UserMapper implements Mapper<User, UserView> {
 
-    private final MapperFacade fullMapperFacade;
+    private final MapperFacade reverseMapperFacade;
+    private final MapperFacade mapperFacade;
     private final MapperFacade shortMapperFacade;
 
     @Autowired
     public UserMapper(MapperFactory mapperFactory1,
                       MapperFactory mapperFactory2,
+                      MapperFactory mapperFactory3,
                       PhoneConverter converter) {
-//        mapperFactory1
-//            .getConverterFactory()
-//            .registerConverter("PhoneToPhone", converter);
-//
-//        mapperFactory1
-//            .classMap(User.class, UserView.class)
-//            .fieldAToB("phones{phone}", "phone{}")
-//            .fieldMap("phone", "phones").converter("PhoneToPhone").bToA().add()
-//            .byDefault()
-//            .register();
 
-        fullMapperFacade = mapperFactory1.getMapperFacade();
+        mapperFactory1
+                .getConverterFactory()
+                .registerConverter("PhoneToPhone", converter);
 
-//        mapperFactory2
-//            .classMap(User.class, UserView.class)
-//            .exclude("orgId")
-//            .exclude("address")
-//            .exclude("phone")
-//            .byDefault()
-//            .register();
+        mapperFactory1
+                .classMap(UserView.class, User.class)
+                .fieldMap("phone", "phones").converter("PhoneToPhone").add()
+                .byDefault()
+                .register();
 
-        shortMapperFacade = mapperFactory2.getMapperFacade();
+        mapperFacade = mapperFactory1.getMapperFacade();
+
+        mapperFactory2
+            .classMap(User.class, UserView.class)
+            .fieldAToB("phones{phone}", "phone{}")
+            .fieldAToB("document.documentType.code", "docCode")
+            .fieldAToB("document.documentType.name", "docName")
+            .fieldAToB("document.docNumber", "docNumber")
+            .fieldAToB("document.docDate", "docDate")
+            .fieldAToB("country.name", "citizenshipName")
+            .fieldAToB("country.code", "citizenshipCode")
+            .fieldAToB("document.isIdentified", "isIdentified")
+            .byDefault()
+            .register();
+
+        reverseMapperFacade = mapperFactory2.getMapperFacade();
+
+        mapperFactory3
+            .classMap(User.class, UserView.class)
+            .exclude("officeId")
+            .exclude("phones")
+            .exclude("document")
+            .exclude("country")
+            .byDefault()
+            .register();
+
+        shortMapperFacade = mapperFactory3.getMapperFacade();
+
     }
 
     @Override
     public User toEntity(UserView userView) {
-        return fullMapperFacade.map(userView, User.class);
+        return mapperFacade.map(userView, User.class);
     }
 
     @Override
     public UserView toView(User user) {
-        return fullMapperFacade.map(user, UserView.class);
+        return reverseMapperFacade.map(user, UserView.class);
     }
 
     @Override
     public List<User> toEntityList(Iterable<UserView> views) {
-        return fullMapperFacade.mapAsList(views, User.class);
+        return shortMapperFacade.mapAsList(views, User.class);
     }
 
     @Override

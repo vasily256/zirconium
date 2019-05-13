@@ -38,11 +38,7 @@ public class UserDao implements ContentDao<User> {
     @Override
     public User findById(long id) {
         Optional<User> container = userRepository.findById(id);
-
-        User user = container.get();
-        log.debug("XXX\n" + user);
-
-        if (/*!container.isPresent()*/ true) {
+        if (!container.isPresent()) {
             throw new EntityNotFoundException("user id " + id + " not found");
         }
 
