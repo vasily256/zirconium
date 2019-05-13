@@ -12,14 +12,12 @@ import java.util.List;
 @Service
 public class UserMapper implements Mapper<User, UserView> {
 
-    private final MapperFacade reverseMapperFacade;
-    private final MapperFacade mapperFacade;
+    private final MapperFacade fullMapperFacade;
     private final MapperFacade shortMapperFacade;
 
     @Autowired
     public UserMapper(MapperFactory mapperFactory1,
                       MapperFactory mapperFactory2,
-                      MapperFactory mapperFactory3,
                       PhoneConverter converter) {
 
         mapperFactory1
@@ -27,29 +25,22 @@ public class UserMapper implements Mapper<User, UserView> {
                 .registerConverter("PhoneToPhone", converter);
 
         mapperFactory1
-                .classMap(UserView.class, User.class)
-                .fieldMap("phone", "phones").converter("PhoneToPhone").add()
-                .byDefault()
-                .register();
-
-        mapperFacade = mapperFactory1.getMapperFacade();
-
-        mapperFactory2
             .classMap(User.class, UserView.class)
+            .fieldMap("phones", "phone").converter("PhoneToPhone").bToA().add()
             .fieldAToB("phones{phone}", "phone{}")
+            .fieldAToB("country.name", "citizenshipName")
+            .fieldAToB("country.code", "citizenshipCode")
             .fieldAToB("document.documentType.code", "docCode")
             .fieldAToB("document.documentType.name", "docName")
             .fieldAToB("document.docNumber", "docNumber")
             .fieldAToB("document.docDate", "docDate")
-            .fieldAToB("country.name", "citizenshipName")
-            .fieldAToB("country.code", "citizenshipCode")
             .fieldAToB("document.isIdentified", "isIdentified")
             .byDefault()
             .register();
 
-        reverseMapperFacade = mapperFactory2.getMapperFacade();
+        fullMapperFacade = mapperFactory1.getMapperFacade();
 
-        mapperFactory3
+        mapperFactory2
             .classMap(User.class, UserView.class)
             .exclude("officeId")
             .exclude("phones")
@@ -58,18 +49,17 @@ public class UserMapper implements Mapper<User, UserView> {
             .byDefault()
             .register();
 
-        shortMapperFacade = mapperFactory3.getMapperFacade();
-
+        shortMapperFacade = mapperFactory2.getMapperFacade();
     }
 
     @Override
     public User toEntity(UserView userView) {
-        return mapperFacade.map(userView, User.class);
+        return fullMapperFacade.map(userView, User.class);
     }
 
     @Override
     public UserView toView(User user) {
-        return reverseMapperFacade.map(user, UserView.class);
+        return fullMapperFacade.map(user, UserView.class);
     }
 
     @Override
