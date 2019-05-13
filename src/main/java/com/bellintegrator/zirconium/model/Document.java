@@ -35,4 +35,14 @@ public class Document {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doc_type_id")
     private DocumentType documentType;
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                       "docNumber='" + docNumber + '\'' +
+                       ", docDate=" + docDate +
+                       ", isIdentified=" + isIdentified +
+                       ", documentType=" + documentType +
+                       '}';
+    }
 }
