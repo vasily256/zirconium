@@ -12,27 +12,37 @@ import java.util.List;
 @Service
 public class OfficeMapper implements Mapper<Office, OfficeView> {
 
-    private final MapperFacade fullMapperFacade;
+    private final MapperFacade reverseMapperFacade;
+    private final MapperFacade mapperFacade;
     private final MapperFacade shortMapperFacade;
 
     @Autowired
     public OfficeMapper(MapperFactory mapperFactory1,
                         MapperFactory mapperFactory2,
+                        MapperFactory mapperFactory3,
                         PhoneConverter converter) {
-        mapperFactory1
-            .getConverterFactory()
-            .registerConverter("PhoneToPhone", converter);
 
         mapperFactory1
+                .getConverterFactory()
+                .registerConverter("PhoneToPhone", converter);
+
+        mapperFactory1
+                .classMap(OfficeView.class, Office.class)
+                .fieldMap("phone", "phones").converter("PhoneToPhone").add()
+                .byDefault()
+                .register();
+
+        mapperFacade = mapperFactory1.getMapperFacade();
+
+        mapperFactory2
             .classMap(Office.class, OfficeView.class)
             .fieldAToB("phones{phone}", "phone{}")
-            .fieldMap("phones", "phone").converter("PhoneToPhone").bToA().add()
             .byDefault()
             .register();
 
-        fullMapperFacade = mapperFactory1.getMapperFacade();
+        reverseMapperFacade = mapperFactory2.getMapperFacade();
 
-        mapperFactory2
+        mapperFactory3
             .classMap(Office.class, OfficeView.class)
             .exclude("orgId")
             .exclude("address")
@@ -40,22 +50,23 @@ public class OfficeMapper implements Mapper<Office, OfficeView> {
             .byDefault()
             .register();
 
-        shortMapperFacade = mapperFactory2.getMapperFacade();
+        shortMapperFacade = mapperFactory3.getMapperFacade();
+
     }
 
     @Override
     public Office toEntity(OfficeView officeView) {
-        return fullMapperFacade.map(officeView, Office.class);
+        return mapperFacade.map(officeView, Office.class);
     }
 
     @Override
     public OfficeView toView(Office office) {
-        return fullMapperFacade.map(office, OfficeView.class);
+        return reverseMapperFacade.map(office, OfficeView.class);
     }
 
     @Override
     public List<Office> toEntityList(Iterable<OfficeView> views) {
-        return fullMapperFacade.mapAsList(views, Office.class);
+        return shortMapperFacade.mapAsList(views, Office.class);
     }
 
     @Override

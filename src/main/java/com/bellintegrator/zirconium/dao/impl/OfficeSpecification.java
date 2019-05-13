@@ -47,7 +47,7 @@ public class OfficeSpecification implements Specification<Office> {
             predicates.add(phone.get("phone").in(strPhones));
         }
 
-        Boolean isActive = office.isActive();
+        Boolean isActive = office.getIsActive();
         if (isActive != null) {
             predicates.add(criteriaBuilder.equal(root.get("isActive"), isActive));
         }

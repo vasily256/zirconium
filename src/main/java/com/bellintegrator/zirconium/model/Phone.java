@@ -1,5 +1,7 @@
 package com.bellintegrator.zirconium.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +10,7 @@ import java.util.Set;
  * Номер телефона
  */
 @Entity
+@NoArgsConstructor @Setter @Getter
 public class Phone {
 
     @Id
@@ -21,11 +24,9 @@ public class Phone {
     private String phone;
 
     @ManyToMany(mappedBy = "phones", fetch = FetchType.LAZY)
+    @Getter(AccessLevel.NONE)
     private Set<Office> offices;
 
-    protected Phone() {
-        super();
-    }
 
     public Phone(String phone) {
         this.phone = phone;
@@ -36,30 +37,5 @@ public class Phone {
             offices = new HashSet<>();
         }
         return offices;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    @Override
-    public String toString() {
-        return phone;
     }
 }

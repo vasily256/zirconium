@@ -5,6 +5,7 @@ import com.bellintegrator.zirconium.dao.UserRepository;
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
 import com.bellintegrator.zirconium.model.User;
 import com.bellintegrator.zirconium.model.Phone;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
+@Slf4j
 public class UserDao implements ContentDao<User> {
     private final UserRepository userRepository;
     private final EntityManager entityManager;
@@ -36,7 +38,11 @@ public class UserDao implements ContentDao<User> {
     @Override
     public User findById(long id) {
         Optional<User> container = userRepository.findById(id);
-        if (!container.isPresent()) {
+
+        User user = container.get();
+        log.debug("XXX\n" + user);
+
+        if (/*!container.isPresent()*/ true) {
             throw new EntityNotFoundException("user id " + id + " not found");
         }
 

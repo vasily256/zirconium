@@ -1,5 +1,9 @@
 package com.bellintegrator.zirconium.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,6 +11,7 @@ import java.util.Set;
  * Пользователь
  */
 @Entity
+@NoArgsConstructor @Setter @Getter
 public class User {
 
     @Id
@@ -51,104 +56,4 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
     private Country country;
-
-    protected User() {
-        super();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public Long getOfficeId() {
-        return officeId;
-    }
-
-    public void setOfficeId(Long officeId) {
-        this.officeId = officeId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public Set<Phone> getPhones() {
-        return phones;
-    }
-
-    public void setPhones(Set<Phone> phones) {
-        this.phones = phones;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public void setDocument(Document document) {
-        this.document = document;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                       "id=" + id +
-                       ", version=" + version +
-                       ", officeId=" + officeId +
-                       ", firstName='" + firstName + '\'' +
-                       ", secondName='" + secondName + '\'' +
-                       ", middleName='" + middleName + '\'' +
-                       ", position='" + position + '\'' +
-                       ", phones=" + phones +
-                       ", document=" + document +
-                       ", country=" + country +
-                       '}';
-    }
 }

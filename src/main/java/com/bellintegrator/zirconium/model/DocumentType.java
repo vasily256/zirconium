@@ -1,5 +1,9 @@
 package com.bellintegrator.zirconium.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +11,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Document_Type")
+@NoArgsConstructor @Setter @Getter
 public class DocumentType {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DocumentTypeSequence")
     @SequenceGenerator(name="DocumentTypeSequence", sequenceName = "Document_Type_sequence", allocationSize = 1)
@@ -16,42 +22,4 @@ public class DocumentType {
     private String code;
 
     private String name;
-
-    protected DocumentType() {
-        super();
-    }
-
-    public DocumentType(String code, String name) {
-        this.code = code;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "DocumentType{" +
-                       "id=" + id +
-                       ", code='" + code + '\'' +
-                       ", name='" + name + '\'' +
-                       '}';
-    }
 }
