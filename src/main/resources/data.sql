@@ -59,12 +59,12 @@ INSERT INTO User (id, version, office_id, country_id, first_name, second_name, m
 VALUES (10, 0, 3, 185, 'Ирина', 'Владимировна', 'Карандашева', 'Секретарь');
 INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
 VALUES (11, 0, 3, 185, 'Михал', 'Павлович', 'Крылов', 'Менеджер');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
-VALUES (12, 0, 4, 44, 'Цзиньхуа', 'Ху', 'Технолог', true);
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
-VALUES (13, 0, 4, 44, 'Вэйдун', 'Ли', 'Инженер', true);
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
-VALUES (14, 0, 4, 44, 'Цзиньсун', 'Чжан', 'Механик', true);
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, position)
+VALUES (12, 0, 4, 44, 'Цзиньхуа', 'Ху', 'Технолог');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, position)
+VALUES (13, 0, 4, 44, 'Вэйдун', 'Ли', 'Инженер');
+INSERT INTO User (id, version, office_id, country_id, first_name, second_name, position)
+VALUES (14, 0, 4, 44, 'Цзиньсун', 'Чжан', 'Механик');
 
 /* Документ */
 INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
