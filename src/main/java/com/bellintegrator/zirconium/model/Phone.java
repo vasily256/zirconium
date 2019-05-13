@@ -20,7 +20,7 @@ public class Phone {
 
     private String phone;
 
-    @ManyToMany(mappedBy = "phone", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "phone", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Office> offices;
 
     protected Phone() {
