@@ -36,7 +36,7 @@ public class UserService implements ContentService<UserView> {
     @Transactional
     public Collection<UserView> list(UserView userView) {
         User user = mapper.toEntity(userView);
-        List<User> users = dao.findAll(null);
+        List<User> users = dao.findAll(user);
         return mapper.toViewList(users);
     }
 
