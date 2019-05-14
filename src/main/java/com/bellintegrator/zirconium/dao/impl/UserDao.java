@@ -1,30 +1,38 @@
 package com.bellintegrator.zirconium.dao.impl;
 
-import com.bellintegrator.zirconium.dao.ContentDao;
-import com.bellintegrator.zirconium.dao.UserRepository;
+import com.bellintegrator.zirconium.dao.*;
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
+import com.bellintegrator.zirconium.model.Country;
+import com.bellintegrator.zirconium.model.Document;
+import com.bellintegrator.zirconium.model.DocumentType;
 import com.bellintegrator.zirconium.model.User;
-import com.bellintegrator.zirconium.model.Phone;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 @Slf4j
 public class UserDao implements ContentDao<User> {
     private final UserRepository userRepository;
+    private final OfficeRepository officeRepository;
+    private final DocumentTypeRepository documentTypeRepository;
+    private final CountryRepository countryRepository;
     private final EntityManager entityManager;
 
     @Autowired
-    public UserDao(UserRepository userRepository, EntityManager entityManager) {
+    public UserDao(UserRepository userRepository,
+                   OfficeRepository officeRepository,
+                   DocumentTypeRepository documentTypeRepository,
+                   CountryRepository countryRepository,
+                   EntityManager entityManager) {
         this.userRepository = userRepository;
+        this.officeRepository = officeRepository;
+        this.documentTypeRepository = documentTypeRepository;
+        this.countryRepository = countryRepository;
         this.entityManager = entityManager;
     }
 
@@ -42,12 +50,58 @@ public class UserDao implements ContentDao<User> {
             throw new EntityNotFoundException("user id " + id + " not found");
         }
 
+        log.debug("LOADING: " + container.get().toString());
         return container.get();
     }
 
     @Override
     public long save(User user) {
+        log.debug("SAVING: " + user.toString());
+
+        Long officeId = user.getOfficeId();
+
+        if (!officeRepository.existsById(officeId)) {
+            throw new EntityNotFoundException("office id " + officeId + " not found");
+        }
+
+        Country country = user.getCountry();
+
+        if (country != null) {
+            String countryCode = country.getCode();
+            if (countryCode != null) {
+                Country countryFromRepository = countryRepository.findByCode(countryCode);
+                if (countryFromRepository == null) {
+                    throw new EntityNotFoundException("Illegal country code: " + countryCode);
+                }
+                user.setCountry(countryFromRepository);
+            } else {
+                user.setCountry(null);
+            }
+        }
+
+        Document document = user.getDocument();
+
+        if (document != null && document.getDocumentType() != null) {
+            String docCode = document.getDocumentType().getCode();
+            if (docCode != null) {
+                DocumentType documentType = documentTypeRepository.findByCode(docCode);
+                if (documentType == null) {
+                    throw new EntityNotFoundException("Illegal document code: " + docCode);
+                }
+                document.setDocumentType(documentType);
+            } else {
+                document.setDocumentType(null);
+            }
+        }
+
+        user.setDocument(null);
         userRepository.save(user);
+
+        if (document != null) {
+            document.setUserId(user.getId());
+            user.setDocument(document);
+        }
+
         return user.getId();
     }
 
