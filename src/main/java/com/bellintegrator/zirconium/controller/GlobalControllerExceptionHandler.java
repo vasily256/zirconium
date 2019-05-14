@@ -1,6 +1,7 @@
 package com.bellintegrator.zirconium.controller;
 
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,14 +11,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 /**
  * Обработчик исключений для формирования
  * соответствующих ответов сервера
  */
 @ControllerAdvice
+@Slf4j
 public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -37,9 +36,8 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 
     @ExceptionHandler(Throwable.class)
     protected ResponseEntity<?> handleAllExceptions(Throwable ex) {
-        StringWriter strWriter = new StringWriter();
-        ex.printStackTrace(new PrintWriter(strWriter));
-        ErrorResponseBody body = new ErrorResponseBody(strWriter.toString());
+        log.error("error", ex);
+        ErrorResponseBody body = new ErrorResponseBody(ex.toString() + ". See logs for details");
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
