@@ -3,16 +3,14 @@ package com.bellintegrator.zirconium.view;
 import com.bellintegrator.zirconium.view.validation.group.ListViews;
 import com.bellintegrator.zirconium.view.validation.group.SaveView;
 import com.bellintegrator.zirconium.view.validation.group.UpdateView;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
-@NoArgsConstructor @Setter @Getter
-@ToString
+@NoArgsConstructor @Setter @Getter @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserView {
 
@@ -36,10 +34,7 @@ public class UserView {
     private String docCode;
     private String docName;
     private String docNumber;
-
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date docDate;
-
+    private LocalDate docDate;
     private String citizenshipName;
     private String citizenshipCode;
     private Boolean isIdentified;

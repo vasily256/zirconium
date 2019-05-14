@@ -3,7 +3,7 @@ package com.bellintegrator.zirconium.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * Документ
@@ -23,7 +23,7 @@ public class Document {
     private String docNumber;
 
     @Column(name = "doc_date")
-    private Date docDate;
+    private LocalDate docDate;
 
     @Column(name = "is_identified")
     private Boolean isIdentified;
