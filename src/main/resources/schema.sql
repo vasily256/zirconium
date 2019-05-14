@@ -88,9 +88,9 @@ CREATE SEQUENCE IF NOT EXISTS User_sequence START WITH 15;
 CREATE TABLE IF NOT EXISTS Document (
     user_id          INTEGER     NOT NULL COMMENT 'Уникальный идентификатор пользователя' PRIMARY KEY,
     version          INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
-    doc_type_id      INTEGER     NOT NULL COMMENT 'Уникальный идентификатор вида документа',
-    doc_number       VARCHAR(50) NOT NULL COMMENT 'Номер документа',
-    doc_date         DATE        NOT NULL COMMENT 'Дата документа',
+    doc_type_id      INTEGER              COMMENT 'Уникальный идентификатор вида документа',
+    doc_number       VARCHAR(50)          COMMENT 'Номер документа',
+    doc_date         DATE                 COMMENT 'Дата документа',
     is_identified    BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (doc_type_id) REFERENCES Document_Type(id),
