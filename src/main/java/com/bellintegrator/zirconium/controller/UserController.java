@@ -73,8 +73,8 @@ public class UserController {
         long id = userService.save(userView);
 
         URI location = ServletUriComponentsBuilder
-                               .fromCurrentRequest()
-                               .path("/{id}")
+                               .fromCurrentContextPath()
+                               .path("/api/user/{id}")
                                .buildAndExpand(id)
                                .toUri();
 

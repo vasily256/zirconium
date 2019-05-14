@@ -74,8 +74,8 @@ public class OfficeController {
         long id = officeService.save(officeView);
 
         URI location = ServletUriComponentsBuilder
-                               .fromCurrentRequest()
-                               .path("/{id}")
+                               .fromCurrentContextPath()
+                               .path("/api/office/{id}")
                                .buildAndExpand(id)
                                .toUri();
 
