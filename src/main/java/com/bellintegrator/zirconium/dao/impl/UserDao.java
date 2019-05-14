@@ -2,17 +2,17 @@ package com.bellintegrator.zirconium.dao.impl;
 
 import com.bellintegrator.zirconium.dao.*;
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
-import com.bellintegrator.zirconium.model.Country;
-import com.bellintegrator.zirconium.model.Document;
-import com.bellintegrator.zirconium.model.DocumentType;
-import com.bellintegrator.zirconium.model.User;
+import com.bellintegrator.zirconium.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 @Slf4j
@@ -50,12 +50,17 @@ public class UserDao implements ContentDao<User> {
             throw new EntityNotFoundException("user id " + id + " not found");
         }
 
-        log.debug("LOADING: " + container.get().toString());
+        log.debug("GETTING: " + container.get().toString());
+
         return container.get();
     }
 
     @Override
     public long save(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException();
+        }
+
         log.debug("SAVING: " + user.toString());
 
         Long officeId = user.getOfficeId();
@@ -64,34 +69,14 @@ public class UserDao implements ContentDao<User> {
             throw new EntityNotFoundException("office id " + officeId + " not found");
         }
 
-        Country country = user.getCountry();
-
-        if (country != null) {
-            String countryCode = country.getCode();
-            if (countryCode != null) {
-                Country countryFromRepository = countryRepository.findByCode(countryCode);
-                if (countryFromRepository == null) {
-                    throw new EntityNotFoundException("Illegal country code: " + countryCode);
-                }
-                user.setCountry(countryFromRepository);
-            } else {
-                user.setCountry(null);
-            }
-        }
+        Country country = validateCountry(user.getCountry());
+        user.setCountry(country);
 
         Document document = user.getDocument();
 
-        if (document != null && document.getDocumentType() != null) {
-            String docCode = document.getDocumentType().getCode();
-            if (docCode != null) {
-                DocumentType documentType = documentTypeRepository.findByCode(docCode);
-                if (documentType == null) {
-                    throw new EntityNotFoundException("Illegal document code: " + docCode);
-                }
-                document.setDocumentType(documentType);
-            } else {
-                document.setDocumentType(null);
-            }
+        if (document != null) {
+            DocumentType documentType = validateDocumentType(document.getDocumentType());
+            document.setDocumentType(documentType);
         }
 
         user.setDocument(null);
@@ -107,30 +92,110 @@ public class UserDao implements ContentDao<User> {
 
     @Override
     public void update(User user) {
-//        long id = user.getId();
-//        Optional<User> container = userRepository.findById(id);
-//        if (!container.isPresent()) {
-//            throw new EntityNotFoundException("can't update: user id " + id + " not found");
-//        }
-//
-//        User currentUser = container.get();
-//
-//        currentUser.setName(user.getName());
-//        currentUser.setAddress(user.getAddress());
-//        currentUser.setActive(user.isActive());
-//
-//        Set<Phone> newPhones = user.getPhone();
-//        Set<Phone> currentPhones = new HashSet<>(currentUser.getPhone());
-//        if (newPhones != null) {
-//            currentUser.setPhone(newPhones);
-//        }
-//
-//        userRepository.saveAndFlush(currentUser);
-//
-//        Query query = entityManager.createNativeQuery(CustomQueries.DELETE_UNUSED_PHONES);
-//        for (Phone phone : currentPhones) {
-//            query.setParameter("id", phone.getId());
-//        }
-//        query.executeUpdate();
+        if (user == null) {
+            return;
+        }
+
+        log.debug("UPDATING: " + user.toString());
+
+        long userId = user.getId();
+        Optional<User> container = userRepository.findById(userId);
+        if (!container.isPresent()) {
+            throw new EntityNotFoundException("can't update: user id " + userId + " not found");
+        }
+
+        User currentUser = container.get();
+
+        if (user.getOfficeId() != null) {
+            currentUser.setOfficeId(user.getOfficeId());
+        }
+
+        if (user.getFirstName() != null) {
+            currentUser.setFirstName(user.getFirstName());
+        }
+
+        if (user.getSecondName() != null) {
+            currentUser.setSecondName(user.getSecondName());
+        }
+
+        if (user.getMiddleName() != null) {
+            currentUser.setMiddleName(user.getMiddleName());
+        }
+
+        if (user.getPosition() != null) {
+            currentUser.setPosition(user.getPosition());
+        }
+
+        Document document = user.getDocument();
+        Document currentDocument = currentUser.getDocument();
+        if (document != null) {
+
+            DocumentType documentType = validateDocumentType(document.getDocumentType());
+            if (documentType != null) {
+                currentDocument.setDocumentType(documentType);
+            }
+
+            if (document.getIsIdentified() != null) {
+                currentDocument.setIsIdentified(document.getIsIdentified());
+            }
+
+            if (document.getDocDate() != null) {
+                currentDocument.setDocDate(document.getDocDate());
+            }
+
+            if (document.getDocNumber() != null) {
+                currentDocument.setDocNumber(document.getDocNumber());
+            }
+        }
+
+        Country country = validateCountry(user.getCountry());
+        if (country != null) {
+            currentUser.setCountry(country);
+        }
+
+        Set<Phone> newPhones = user.getPhones();
+        Set<Phone> oldPhones = new HashSet<>(currentUser.getPhones());
+
+        if (newPhones != null) {
+            currentUser.setPhones(newPhones);
+        }
+
+        userRepository.saveAndFlush(currentUser);
+
+        Query query = entityManager.createNativeQuery(CustomQueries.DELETE_UNUSED_PHONES);
+        for (Phone phone : oldPhones) {
+            query.setParameter("id", phone.getId());
+        }
+        query.executeUpdate();
+    }
+
+    private Country validateCountry(Country country) {
+        if (country == null || country.getCode() == null) {
+            return null;
+        }
+
+        String countryCode = country.getCode();
+        Country countryFromRepository = countryRepository.findByCode(countryCode);
+
+        if (countryFromRepository == null) {
+            throw new EntityNotFoundException("Illegal country code: " + countryCode);
+        }
+
+        return countryFromRepository;
+    }
+
+    private DocumentType validateDocumentType(DocumentType docType) {
+        if (docType == null || docType.getCode() == null) {
+            return null;
+        }
+
+        String docCode = docType.getCode();
+        DocumentType docTypeFromRepository = documentTypeRepository.findByCode(docCode);
+
+        if (docTypeFromRepository == null) {
+            throw new EntityNotFoundException("Illegal document code: " + docCode);
+        }
+
+        return docTypeFromRepository;
     }
 }
