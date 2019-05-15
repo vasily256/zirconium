@@ -38,7 +38,7 @@ public class UserDao implements ContentDao<User> {
     @Override
     public List<User> findAll(User user) {
         if (user == null) {
-            throw new IllegalArgumentException("User can not be null");
+            throw new IllegalArgumentException("user can not be null");
         }
 
         UserSpecification userSpec = new UserSpecification(user);
@@ -58,13 +58,13 @@ public class UserDao implements ContentDao<User> {
     @Override
     public long save(User user) {
         if (user == null) {
-            throw new IllegalArgumentException("User can not be null");
+            throw new IllegalArgumentException("user can not be null");
         }
 
         Long officeId = user.getOfficeId();
 
         if (!officeRepository.existsById(officeId)) {
-            throw new EntityNotFoundException("office id " + officeId + " not found");
+            throw new EntityNotFoundException("user id " + officeId + " not found");
         }
 
         Country country = validateCountry(user.getCountry());

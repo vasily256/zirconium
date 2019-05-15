@@ -30,7 +30,7 @@ public class OrganizationDao implements ContentDao<Organization> {
     @Override
     public List<Organization> findAll(Organization org) {
         if (org == null) {
-            throw new IllegalArgumentException("Organization can not be null");
+            throw new IllegalArgumentException("organization can not be null");
         }
 
         OrganizationSpecification orgSpec = new OrganizationSpecification(org);
@@ -50,7 +50,7 @@ public class OrganizationDao implements ContentDao<Organization> {
     @Override
     public long save(Organization org) {
         if (org == null) {
-            throw new IllegalArgumentException("Organization can not be null");
+            throw new IllegalArgumentException("organization can not be null");
         }
 
         orgRepository.save(org);
@@ -66,7 +66,7 @@ public class OrganizationDao implements ContentDao<Organization> {
         long id = org.getId();
         Optional<Organization> container = orgRepository.findById(id);
         if (!container.isPresent()) {
-            throw new EntityNotFoundException("can't update: org id " + id + " not found");
+            throw new EntityNotFoundException("can't update: organization id " + id + " not found");
         }
 
         Organization currentOrganization = container.get();

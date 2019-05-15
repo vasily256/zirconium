@@ -30,7 +30,7 @@ public class OfficeDao implements ContentDao<Office> {
     @Override
     public List<Office> findAll(Office office) {
         if (office == null) {
-            throw new IllegalArgumentException("Office can not be null");
+            throw new IllegalArgumentException("office can not be null");
         }
 
         OfficeSpecification officeSpec = new OfficeSpecification(office);
@@ -50,7 +50,7 @@ public class OfficeDao implements ContentDao<Office> {
     @Override
     public long save(Office office) {
         if (office == null) {
-            throw new IllegalArgumentException("Office can not be null");
+            throw new IllegalArgumentException("office can not be null");
         }
 
         officeRepository.save(office);
