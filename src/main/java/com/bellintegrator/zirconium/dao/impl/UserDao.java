@@ -122,8 +122,14 @@ public class UserDao implements ContentDao<User> {
         }
 
         Document document = user.getDocument();
-        Document currentDocument = currentUser.getDocument();
         if (document != null) {
+            Document currentDocument = currentUser.getDocument();
+
+            if (currentDocument == null) {
+                currentDocument = new Document();
+                currentDocument.setUserId(currentUser.getId());
+                currentUser.setDocument(currentDocument);
+            }
 
             DocumentType documentType = validateDocumentType(document.getDocumentType());
             if (documentType != null) {
@@ -156,11 +162,13 @@ public class UserDao implements ContentDao<User> {
 
         userRepository.saveAndFlush(currentUser);
 
-        Query query = entityManager.createNativeQuery(CustomQueries.DELETE_UNUSED_PHONES);
-        for (Phone phone : oldPhones) {
-            query.setParameter("id", phone.getId());
+        if (oldPhones.size() > 0) {
+            Query query = entityManager.createNativeQuery(CustomQueries.DELETE_UNUSED_PHONES);
+            for (Phone phone : oldPhones) {
+                query.setParameter("id", phone.getId());
+            }
+            query.executeUpdate();
         }
-        query.executeUpdate();
     }
 
     private Country validateCountry(Country country) {

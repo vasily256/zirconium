@@ -90,10 +90,12 @@ public class OfficeDao implements ContentDao<Office> {
 
         officeRepository.saveAndFlush(currentOffice);
 
-        Query query = entityManager.createNativeQuery(CustomQueries.DELETE_UNUSED_PHONES);
-        for (Phone phone : oldPhones) {
-            query.setParameter("id", phone.getId());
+        if (oldPhones.size() > 0) {
+            Query query = entityManager.createNativeQuery(CustomQueries.DELETE_UNUSED_PHONES);
+            for (Phone phone : oldPhones) {
+                query.setParameter("id", phone.getId());
+            }
+            query.executeUpdate();
         }
-        query.executeUpdate();
     }
 }
