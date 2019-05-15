@@ -82,7 +82,7 @@ CREATE INDEX IX_User_Office_id ON User (office_id);
 CREATE INDEX IX_User_Country_id ON User (country_id);
 
 /* Генератор первичного ключа пользователя */
-CREATE SEQUENCE IF NOT EXISTS User_sequence START WITH 15;
+CREATE SEQUENCE IF NOT EXISTS User_sequence START WITH 16;
 
 /* Документ пользователя */
 CREATE TABLE IF NOT EXISTS Document (

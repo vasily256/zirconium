@@ -65,6 +65,8 @@ INSERT INTO User (id, version, office_id, country_id, first_name, second_name, p
 VALUES (13, 0, 4, 44, 'Вэйдун', 'Ли', 'Инженер');
 INSERT INTO User (id, version, office_id, country_id, first_name, second_name, position)
 VALUES (14, 0, 4, 44, 'Цзиньсун', 'Чжан', 'Механик');
+INSERT INTO User (id, version, office_id, first_name, second_name, position)
+VALUES (15, 0, 5, 'Джон', 'Смит', 'бухгалтер');
 
 /* Документ */
 INSERT INTO Document (user_id, version, doc_type_id, doc_number, doc_date, is_identified)
