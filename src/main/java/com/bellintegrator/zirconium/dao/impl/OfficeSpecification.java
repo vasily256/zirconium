@@ -23,7 +23,7 @@ public class OfficeSpecification implements Specification<Office> {
                                  CriteriaBuilder criteriaBuilder) {
 
         criteriaQuery.distinct(true);
-        Join<Office, Phone> phone = root.join("phones", JoinType.LEFT);
+        Join<Office, Phone> phoneJoin = root.join("phones", JoinType.LEFT);
         List<Predicate> predicates = new ArrayList<>();
 
         Long orgId = office.getOrgId();
@@ -44,7 +44,7 @@ public class OfficeSpecification implements Specification<Office> {
             Set<String> strPhones = phones.stream()
                                           .map(Phone::getPhone)
                                           .collect(Collectors.toSet());
-            predicates.add(phone.get("phone").in(strPhones));
+            predicates.add(phoneJoin.get("phone").in(strPhones));
         }
 
         Boolean isActive = office.getIsActive();
