@@ -3,7 +3,6 @@ package com.bellintegrator.zirconium.dao.impl;
 import com.bellintegrator.zirconium.dao.*;
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
 import com.bellintegrator.zirconium.model.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-@Slf4j
 public class UserDao implements ContentDao<User> {
     private final UserRepository userRepository;
     private final OfficeRepository officeRepository;
@@ -42,9 +40,8 @@ public class UserDao implements ContentDao<User> {
             throw new IllegalArgumentException("User can not be null");
         }
 
-//        UserSpecification userSpec = new UserSpecification(user);
-//        return userRepository.findAll(userSpec);
-        return userRepository.findAll();
+        UserSpecification userSpec = new UserSpecification(user);
+        return userRepository.findAll(userSpec);
     }
 
     @Override
@@ -54,8 +51,6 @@ public class UserDao implements ContentDao<User> {
             throw new EntityNotFoundException("user id " + id + " not found");
         }
 
-        log.debug("GETTING: " + container.get().toString());
-
         return container.get();
     }
 
@@ -64,8 +59,6 @@ public class UserDao implements ContentDao<User> {
         if (user == null) {
             throw new IllegalArgumentException("User can not be null");
         }
-
-        log.debug("SAVING: " + user.toString());
 
         Long officeId = user.getOfficeId();
 
@@ -99,8 +92,6 @@ public class UserDao implements ContentDao<User> {
         if (user == null) {
             return;
         }
-
-        log.debug("UPDATING: " + user.toString());
 
         long userId = user.getId();
         Optional<User> container = userRepository.findById(userId);
