@@ -18,7 +18,7 @@ CREATE INDEX IX_Organization_Inn ON Organization(inn);
 CREATE INDEX IX_Organization_Kpp ON Organization(kpp);
 
 /* Генератор первичного ключа организации */
-CREATE SEQUENCE IF NOT EXISTS Organization_sequence START WITH 3;
+CREATE SEQUENCE IF NOT EXISTS Organization_sequence START WITH 4;
 
 /* Офис */
 CREATE TABLE IF NOT EXISTS Office (
