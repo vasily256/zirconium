@@ -21,14 +21,13 @@ public class MockOfficeService implements ContentService<OfficeView> {
 
     @Autowired
     public MockOfficeService() {
-        OfficeView view = new OfficeView(
-                1L,
-                1L,
-                "Исследовательский центр",
-                "г. Москва, ул. Вербная, д. 5",
-                new HashSet<>(Arrays.asList("74957870544", "74957870545")),
-                true
-        );
+        OfficeView view = new OfficeView();
+        view.setId(1L);
+        view.setOrgId(1L);
+        view.setName("Исследовательский центр");
+        view.setAddress("г. Москва, ул. Вербная, д. 5");
+        view.setPhone(new HashSet<>(Arrays.asList("74957870544", "74957870545")));
+        view.setIsActive(true);
 
         save(view);
     }

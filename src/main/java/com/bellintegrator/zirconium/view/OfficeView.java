@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * Офис
  */
-@AllArgsConstructor @NoArgsConstructor @Setter @Getter
+@NoArgsConstructor @Setter @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OfficeView {
 

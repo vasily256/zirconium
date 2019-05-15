@@ -2,6 +2,7 @@ package com.bellintegrator.zirconium;
 
 import com.bellintegrator.zirconium.controller.ErrorResponseBody;
 import com.bellintegrator.zirconium.controller.JSONResponseWrapper;
+import com.bellintegrator.zirconium.model.Office;
 import com.bellintegrator.zirconium.view.OfficeView;
 import com.google.gson.Gson;
 import org.json.JSONException;
@@ -49,14 +50,16 @@ public class OfficeControllerTests {
     @Autowired
     private Gson gson;
 
-    static OfficeView office = new OfficeView(
-            7L,
-            1L,
-            "Центр тестирования",
-            "г. Москва, ул. Озёрная, д. 1",
-            new HashSet<>(Arrays.asList("74957870538", "79457870540")),
-            true
-    );
+    static OfficeView office = new OfficeView();
+
+    static {
+        office.setId(7L);
+        office.setOrgId(1L);
+        office.setName("Центр тестирования");
+        office.setAddress("г. Москва, ул. Озёрная, д. 1");
+        office.setPhone(new HashSet<>(Arrays.asList("74957870538", "79457870540")));
+        office.setIsActive(true);
+    }
 
     // Сохранение офиса id 5
     @Test
@@ -99,41 +102,38 @@ public class OfficeControllerTests {
     // Запрос списка офисов по заданным критериям
     @Test
     public void testListOffice() throws JSONException {
-        OfficeView office2 = new OfficeView(
-                1L,
-                1L,
-                "Научный центр",
-                "Россия, г. Новосибирск, ул. Почтовая, 6",
-                new HashSet<>(Arrays.asList("77903332211")),
-                true
-        );
+        OfficeView office2 = new OfficeView();
+        office2.setId(1L);
+        office2.setOrgId(1L);
+        office2.setName("Научный центр");
+        office2.setAddress("Россия, г. Новосибирск, ул. Почтовая, 6");
+        office2.setPhone(new HashSet<>(Arrays.asList("77903332211")));
+        office2.setIsActive(true);
 
         List<OfficeView> list = new ArrayList<>();
-        list.add(new OfficeView(
-                office.getId(),
-                null,
-                office.getName(),
-                null,
-                null,
-                true));
-        list.add(new OfficeView(
-                office2.getId(),
-                null,
-                office2.getName(),
-                null,
-                null,
-                true));
 
-        OfficeView officeSearch = new OfficeView(
-                null,
-                1L,
-                "ентр", // фрагмент наименования
-                null,
-                new HashSet<>(Arrays.asList("77903332211", "74957870538")),
-                null
-        );
+        OfficeView officeForList1 = new OfficeView();
 
-        HttpEntity<OfficeView> entity = new HttpEntity<>(officeSearch, headers);
+        officeForList1.setId(office.getId());
+        officeForList1.setName(office.getName());
+        officeForList1.setIsActive(office.getIsActive());
+
+        OfficeView officeForList2 = new OfficeView();
+
+        officeForList2.setId(office2.getId());
+        officeForList2.setName(office2.getName());
+        officeForList2.setIsActive(office2.getIsActive());
+
+        list.add(officeForList1);
+        list.add(officeForList2);
+
+        OfficeView officePattern = new OfficeView();
+
+        officePattern.setOrgId(1L);
+        officePattern.setName("ентр");
+        officePattern.setPhone(new HashSet<>(Arrays.asList("77903332211", "74957870538")));
+
+        HttpEntity<OfficeView> entity = new HttpEntity<>(officePattern, headers);
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("/list"), HttpMethod.POST, entity, String.class);
 
