@@ -38,6 +38,10 @@ public class UserDao implements ContentDao<User> {
 
     @Override
     public List<User> findAll(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User can not be null");
+        }
+
 //        UserSpecification userSpec = new UserSpecification(user);
 //        return userRepository.findAll(userSpec);
         return userRepository.findAll();
@@ -58,7 +62,7 @@ public class UserDao implements ContentDao<User> {
     @Override
     public long save(User user) {
         if (user == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("User can not be null");
         }
 
         log.debug("SAVING: " + user.toString());
@@ -153,11 +157,10 @@ public class UserDao implements ContentDao<User> {
             currentUser.setCountry(country);
         }
 
-        Set<Phone> newPhones = user.getPhones();
         Set<Phone> oldPhones = new HashSet<>(currentUser.getPhones());
 
-        if (newPhones != null) {
-            currentUser.setPhones(newPhones);
+        if (user.getPhones() != null) {
+            currentUser.setPhones(user.getPhones());
         }
 
         userRepository.saveAndFlush(currentUser);
