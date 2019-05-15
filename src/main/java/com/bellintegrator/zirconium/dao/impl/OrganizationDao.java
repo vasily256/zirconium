@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class OrganizationDao implements ContentDao<Organization> {
@@ -104,9 +105,8 @@ public class OrganizationDao implements ContentDao<Organization> {
 
         if (oldPhones.size() > 0) {
             Query query = entityManager.createNativeQuery(CustomQueries.DELETE_UNUSED_PHONES);
-            for (Phone phone : oldPhones) {
-                query.setParameter("id", phone.getId());
-            }
+            List<Long> phoneIds = oldPhones.stream().map(Phone::getId).collect(Collectors.toList());
+            query.setParameter("id", phoneIds);
             query.executeUpdate();
         }
     }
