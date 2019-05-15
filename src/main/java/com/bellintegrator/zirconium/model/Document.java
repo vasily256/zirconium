@@ -36,6 +36,13 @@ public class Document {
     @JoinColumn(name = "doc_type_id")
     private DocumentType documentType;
 
+    @PrePersist
+    void preInsert() {
+        if (isIdentified == null) {
+            isIdentified = true;
+        }
+    }
+
     @Override
     public String toString() {
         return "Document{" +
