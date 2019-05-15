@@ -37,27 +37,27 @@ INSERT INTO Country (id, code, name)
 VALUES (199, '688', 'Республика Сербия');
 
 /* Пользователь */
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (1, 0, 1, 185, 'Федор', 'Николаевич', 'Прокофьев', 'Генеральный директор');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (2, 0, 1, 185, 'Дмитрий', 'Игоревич', 'Иванов', 'Технический директор');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (3, 0, 1, 185, 'Вера', 'Александровна', 'Кузнецова', 'Разработчик');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (4, 0, 1, 199, 'Владислав', 'Владиславович', 'Стоянович', 'Научный сотрудник');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (5, 0, 1, 34, 'Владимир', 'Константинович', 'Константиновский', 'Программист');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (6, 0, 2, 185, 'Никита', 'Алексеевич', 'Дмитриев', 'Главный инженер');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (7, 0, 2, 185, 'Илья', 'Кузьмич', 'Федоров', 'Слесарь');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (8, 0, 2, 185, 'Мария', 'Ивановна', 'Сидоренко', 'Заведующая складом');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (9, 0, 3, 185, 'Иван', 'Петрович', 'Сидоров', 'Генеральный директор');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (10, 0, 3, 185, 'Ирина', 'Владимировна', 'Карандашева', 'Секретарь');
-INSERT INTO User (id, version, office_id, country_id, first_name, second_name, middle_name, position)
+INSERT INTO User (id, version, office_id, country_id, first_name, middle_name, second_name, position)
 VALUES (11, 0, 3, 185, 'Михал', 'Павлович', 'Крылов', 'Менеджер');
 INSERT INTO User (id, version, office_id, country_id, first_name, second_name, position)
 VALUES (12, 0, 4, 44, 'Цзиньхуа', 'Ху', 'Технолог');
