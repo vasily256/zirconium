@@ -1,184 +1,142 @@
 package com.bellintegrator.zirconium;
 
 import com.bellintegrator.zirconium.controller.ErrorResponseBody;
-import com.bellintegrator.zirconium.controller.JSONResponseWrapper;
-import com.bellintegrator.zirconium.model.Office;
 import com.bellintegrator.zirconium.view.OfficeView;
-import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
-import static com.bellintegrator.zirconium.controller.SuccessResponseBody.SUCCESS_RESPONSE_BODY;
-import static junit.framework.TestCase.assertTrue;
+import static com.bellintegrator.zirconium.controller.SuccessResponseBody.*;
+import static org.springframework.http.HttpMethod.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OfficeControllerTests {
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @LocalServerPort
     private int port;
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+    private ControllerTester tester;
 
-    @Autowired
-    private HttpHeaders headers;
+    private OfficeView office1;
+    private OfficeView office2;
+    private OfficeView office3;
 
-    @Autowired
-    private Gson gson;
+    private List<OfficeView> expectedList;
+    private OfficeView filterPattern1;
+    private OfficeView filterPattern2;
 
-    static OfficeView office = new OfficeView();
+    @Before
+    public void init() {
+        tester = new ControllerTester("office", port);
 
-    static {
-        office.setId(7L);
-        office.setOrgId(1L);
-        office.setName("Центр тестирования");
-        office.setAddress("г. Москва, ул. Озёрная, д. 1");
-        office.setPhone(new HashSet<>(Arrays.asList("74957870538", "79457870540")));
-        office.setIsActive(true);
-    }
+        office1 = new OfficeView();
+        office1.setId(7L);
+        office1.setOrgId(3L);
+        office1.setName("центр тестирования");
+        office1.setAddress("г. Москва, ул. Озёрная, д. 1");
+        office1.setPhone(new HashSet<>(Arrays.asList("74957870538", "79457870540")));
+        office1.setIsActive(true);
 
-    // Сохранение офиса id 5
-    @Test
-    public void testAddOffice() throws JSONException {
-        HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/save"), HttpMethod.POST, entity, String.class);
-
-        String location = response.getHeaders().get(HttpHeaders.LOCATION).get(0);
-
-        assertTrue(location.contains("/7"));
-        JSONAssert.assertEquals(gson.toJson(SUCCESS_RESPONSE_BODY), response.getBody(), false);
-    }
-
-    // Запрос данных об офисе id 5
-    @Test
-    public void testGetOffice1() throws JSONException {
-        HttpEntity<OfficeView> entity = new HttpEntity<>(null, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/7"), HttpMethod.GET, entity, String.class);
-
-        JSONAssert.assertEquals(gson.toJson(wrap(office)), response.getBody(), false);
-    }
-
-    // Попытка запроса данных о несуществующем офисе id 6
-    @Test
-    public void testGetOffice2() throws JSONException {
-        HttpEntity<OfficeView> entity = new HttpEntity<>(null, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/8"), HttpMethod.GET, entity, String.class);
-
-        ErrorResponseBody errorResponseBody = new ErrorResponseBody("office id 8 not found");
-
-        JSONAssert.assertEquals(gson.toJson(errorResponseBody), response.getBody(), false);
-    }
-
-    // Запрос списка офисов по заданным критериям
-    @Test
-    public void testListOffice() throws JSONException {
-        OfficeView office2 = new OfficeView();
-        office2.setId(1L);
-        office2.setOrgId(1L);
-        office2.setName("Научный центр");
+        office2 = new OfficeView();
+        office2.setId(8L);
+        office2.setOrgId(3L);
+        office2.setName("научный центр");
         office2.setAddress("Россия, г. Новосибирск, ул. Почтовая, 6");
         office2.setPhone(new HashSet<>(Arrays.asList("77903332211")));
         office2.setIsActive(true);
 
-        List<OfficeView> list = new ArrayList<>();
+        office3 = new OfficeView();
+        office3.setId(9L);
+        office3.setOrgId(3L);
+        office3.setName("филиал");
+        office3.setPhone(new HashSet<>(Arrays.asList("77903332211")));
+        office3.setIsActive(true);
 
         OfficeView officeForList1 = new OfficeView();
-
-        officeForList1.setId(office.getId());
-        officeForList1.setName(office.getName());
-        officeForList1.setIsActive(office.getIsActive());
+        officeForList1.setId(office1.getId());
+        officeForList1.setName(office1.getName());
+        officeForList1.setIsActive(office1.getIsActive());
 
         OfficeView officeForList2 = new OfficeView();
-
         officeForList2.setId(office2.getId());
         officeForList2.setName(office2.getName());
         officeForList2.setIsActive(office2.getIsActive());
 
-        list.add(officeForList1);
-        list.add(officeForList2);
+        expectedList = new ArrayList<>();
+        expectedList.add(officeForList1);
+        expectedList.add(officeForList2);
 
-        OfficeView officePattern = new OfficeView();
+        filterPattern1 = new OfficeView();
+        filterPattern1.setOrgId(3L);
+        filterPattern1.setName("центр");
+        filterPattern1.setPhone(new HashSet<>(Arrays.asList("77777777777")));
 
-        officePattern.setOrgId(1L);
-        officePattern.setName("ентр");
-        officePattern.setPhone(new HashSet<>(Arrays.asList("77903332211", "74957870538")));
-
-        HttpEntity<OfficeView> entity = new HttpEntity<>(officePattern, headers);
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/list"), HttpMethod.POST, entity, String.class);
-
-        JSONAssert.assertEquals(gson.toJson(wrap(list)), response.getBody(), false);
+        filterPattern2 = new OfficeView();
+        filterPattern2.setOrgId(3L);
+        filterPattern2.setName("центр");
+        filterPattern2.setPhone(new HashSet<>(Arrays.asList("77903332211", "74957870538")));
     }
 
-    // Обновление сведений об офисе id 5
     @Test
-    public void testUpdateOffice1() throws JSONException {
-        office.setId(7L);
-        office.setName("Отдел разработки");
-        office.setAddress("г. Москва, Рублёвское ш., д. 29");
-        office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
-
-        HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/update"), HttpMethod.POST, entity, String.class);
-
-        JSONAssert.assertEquals(gson.toJson(SUCCESS_RESPONSE_BODY), response.getBody(), false);
+    public void testAddFail() throws JSONException {
+        Assert.assertFalse(tester.testPost(new OfficeView(), SUCCESS_RESPONSE_BODY, POST, "save"));
     }
 
-    // Попытка обновления сведений о несуществующем офисе id 6
     @Test
-    public void testUpdateOffice2() throws JSONException {
-        office.setId(8L);
-        office.setName("Отдел разработки");
-        office.setAddress("г. Москва, Рублёвское ш., д. 29");
-        office.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
-
-        HttpEntity<OfficeView> entity = new HttpEntity<>(office, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/update"), HttpMethod.POST, entity, String.class);
-
-        ErrorResponseBody errorResponseBody = new ErrorResponseBody("can't update: office id 8 not found");
-
-        JSONAssert.assertEquals(gson.toJson(errorResponseBody), response.getBody(), false);
+    public void testAddSuccess() throws JSONException {
+        Assert.assertTrue(tester.testPost(office1, SUCCESS_RESPONSE_BODY, POST, "save"));
+        Assert.assertTrue(tester.testPost(office2, SUCCESS_RESPONSE_BODY, POST, "save"));
+        Assert.assertTrue(tester.testPost(office3, SUCCESS_RESPONSE_BODY, POST, "save"));
     }
 
-    private String createURLWithPort(String uri) {
-        return "http://localhost:" + port + "/api/office" + uri;
+    @Test
+    public void testGetFail() throws JSONException {
+        Assert.assertTrue(tester.testGet(0, new ErrorResponseBody("office id 0 not found")));
     }
 
-    static <T> JSONResponseWrapper.Wrapper wrap(T o) {
-        return new JSONResponseWrapper.Wrapper<>(o);
+    @Test
+    public void testGetSuccess() throws JSONException {
+        Assert.assertTrue(tester.testGet(office1.getId(), office1));
+    }
+
+    @Test
+    public void testListNotFound() throws JSONException {
+        Assert.assertTrue(tester.testPost(filterPattern1, Collections.EMPTY_LIST, POST, "list"));
+    }
+
+    @Test
+    public void testListFound() throws JSONException {
+        Assert.assertTrue(tester.testPost(filterPattern2, expectedList, POST, "list"));
+    }
+
+    @Test
+    public void testUpdateFail() throws JSONException {
+        office1.setId(0L);
+        office1.setName("Отдел разработки");
+        office1.setAddress("г. Москва, Рублёвское ш., д. 29");
+        office1.setPhone(new HashSet<>(Arrays.asList("74994445840", "74994445841")));
+
+        Assert.assertTrue(tester.testPost(
+                office1, new ErrorResponseBody("can't update: office id 0 not found"), POST, "update")
+        );
+    }
+
+    @Test
+    public void testUpdateSuccess() throws JSONException {
+        office1.setId(7L);
+
+        Assert.assertTrue(tester.testPost(office1, SUCCESS_RESPONSE_BODY, POST, "update"));
     }
 }
