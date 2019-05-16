@@ -62,9 +62,8 @@ public class UserDao implements ContentDao<User> {
         }
 
         Long officeId = user.getOfficeId();
-
         if (!officeRepository.existsById(officeId)) {
-            throw new EntityNotFoundException("user id " + officeId + " not found");
+            throw new EntityNotFoundException("office id " + officeId + " not found");
         }
 
         Country country = validateCountry(user.getCountry());

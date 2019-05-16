@@ -2,6 +2,7 @@ package com.bellintegrator.zirconium.dao.impl;
 
 import com.bellintegrator.zirconium.dao.ContentDao;
 import com.bellintegrator.zirconium.dao.OfficeRepository;
+import com.bellintegrator.zirconium.dao.OrganizationRepository;
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
 import com.bellintegrator.zirconium.model.Office;
 import com.bellintegrator.zirconium.model.Phone;
@@ -19,11 +20,15 @@ import java.util.stream.Collectors;
 @Repository
 public class OfficeDao implements ContentDao<Office> {
     private final OfficeRepository officeRepository;
+    private final OrganizationRepository organizationRepository;
     private final EntityManager entityManager;
 
     @Autowired
-    public OfficeDao(OfficeRepository officeRepository, EntityManager entityManager) {
+    public OfficeDao(OfficeRepository officeRepository,
+                     OrganizationRepository organizationRepository,
+                     EntityManager entityManager) {
         this.officeRepository = officeRepository;
+        this.organizationRepository = organizationRepository;
         this.entityManager = entityManager;
     }
 
@@ -52,6 +57,12 @@ public class OfficeDao implements ContentDao<Office> {
         if (office == null) {
             throw new IllegalArgumentException("office can not be null");
         }
+
+        Long orgId = office.getOrgId();
+        if (!organizationRepository.existsById(orgId)) {
+            throw new EntityNotFoundException("organization id " + orgId + " not found");
+        }
+
 
         officeRepository.save(office);
         return office.getId();
