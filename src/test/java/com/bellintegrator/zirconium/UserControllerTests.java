@@ -2,7 +2,6 @@ package com.bellintegrator.zirconium;
 
 import com.bellintegrator.zirconium.controller.ErrorResponseBody;
 import com.bellintegrator.zirconium.view.UserView;
-import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,6 +33,7 @@ public class UserControllerTests {
     private UserView user3;
 
     private List<UserView> expectedList;
+
     private UserView filterPattern1;
     private UserView filterPattern2;
 
@@ -140,8 +140,13 @@ public class UserControllerTests {
         user1.setFirstName("Владимир");
         user1.setPosition("генеральный директор");
 
-        Assert.assertTrue(tester.testPost(
-                user1, new ErrorResponseBody("can't update: user id 0 not found"), POST, "update")
+        Assert.assertTrue(
+                tester.testPost(
+                        user1,
+                        new ErrorResponseBody("can't update: user id 0 not found"),
+                        POST,
+                        "update"
+                )
         );
     }
 

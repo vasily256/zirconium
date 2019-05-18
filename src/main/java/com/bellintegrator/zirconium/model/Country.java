@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor @Setter @Getter
 public class Country {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CountrySequence")
     @SequenceGenerator(name="CountrySequence", sequenceName = "Country_sequence", allocationSize = 1)
@@ -20,12 +21,4 @@ public class Country {
     private String code;
 
     private String name;
-
-    @Override
-    public String toString() {
-        return "Country{" +
-                       "code='" + code + '\'' +
-                       ", name='" + name + '\'' +
-                       '}';
-    }
 }

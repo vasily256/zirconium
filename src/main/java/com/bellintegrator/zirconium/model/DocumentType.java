@@ -22,12 +22,4 @@ public class DocumentType {
     private String code;
 
     private String name;
-
-    @Override
-    public String toString() {
-        return "DocumentType{" +
-                       "code='" + code + '\'' +
-                       ", name='" + name + '\'' +
-                       '}';
-    }
 }

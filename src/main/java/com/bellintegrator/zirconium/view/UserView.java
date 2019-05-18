@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Set;
 
-@NoArgsConstructor @Setter @Getter @ToString
+@NoArgsConstructor @Setter @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserView {
 

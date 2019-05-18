@@ -25,23 +25,23 @@ public class OrganizationMapper implements Mapper<Organization, OrganizationView
                 .registerConverter("PhoneToPhone", converter);
 
         mapperFactory1
-            .classMap(Organization.class, OrganizationView.class)
-            .fieldMap("phones", "phone").converter("PhoneToPhone").bToA().add()
-            .fieldAToB("phones{phone}", "phone{}")
-            .byDefault()
-            .register();
+                .classMap(Organization.class, OrganizationView.class)
+                .fieldMap("phones", "phone").converter("PhoneToPhone").bToA().add()
+                .fieldAToB("phones{phone}", "phone{}")
+                .byDefault()
+                .register();
 
         fullMapperFacade = mapperFactory1.getMapperFacade();
 
         mapperFactory2
-            .classMap(Organization.class, OrganizationView.class)
-            .exclude("fullName")
-            .exclude("inn")
-            .exclude("kpp")
-            .exclude("address")
-            .exclude("phones")
-            .byDefault()
-            .register();
+                .classMap(Organization.class, OrganizationView.class)
+                .exclude("fullName")
+                .exclude("inn")
+                .exclude("kpp")
+                .exclude("address")
+                .exclude("phones")
+                .byDefault()
+                .register();
 
         shortMapperFacade = mapperFactory2.getMapperFacade();
     }

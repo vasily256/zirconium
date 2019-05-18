@@ -42,14 +42,4 @@ public class Document {
             isIdentified = true;
         }
     }
-
-    @Override
-    public String toString() {
-        return "Document{" +
-                       "docNumber='" + docNumber + '\'' +
-                       ", docDate=" + docDate +
-                       ", isIdentified=" + isIdentified +
-                       ", documentType=" + documentType +
-                       '}';
-    }
 }

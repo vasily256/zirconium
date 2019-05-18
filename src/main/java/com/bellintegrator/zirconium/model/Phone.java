@@ -38,9 +38,4 @@ public class Phone {
         }
         return offices;
     }
-
-    @Override
-    public String toString() {
-        return phone;
-    }
 }

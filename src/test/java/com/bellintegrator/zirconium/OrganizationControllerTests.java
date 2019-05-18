@@ -2,7 +2,6 @@ package com.bellintegrator.zirconium;
 
 import com.bellintegrator.zirconium.controller.ErrorResponseBody;
 import com.bellintegrator.zirconium.view.OrganizationView;
-import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;

@@ -86,7 +86,7 @@ public class ControllerTester {
         return "http://localhost:" + port + "/api/" + srvName + uri;
     }
 
-    static <T> JSONResponseWrapper.Wrapper wrap(T o) {
+    private static <T> JSONResponseWrapper.Wrapper wrap(T o) {
         return new JSONResponseWrapper.Wrapper<>(o);
     }
 }

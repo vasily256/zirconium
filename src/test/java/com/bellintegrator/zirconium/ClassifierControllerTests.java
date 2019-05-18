@@ -40,12 +40,15 @@ public class ClassifierControllerTests {
         CountryView country1 = new CountryView();
         country1.setCode("112");
         country1.setName("Республика Беларусь");
+
         CountryView country2 = new CountryView();
         country2.setCode("156");
         country2.setName("Китайская народная республика");
+
         CountryView country3 = new CountryView();
         country3.setCode("643");
         country3.setName("Российская Федерация");
+
         CountryView country4 = new CountryView();
         country4.setCode("688");
         country4.setName("Республика Сербия");
@@ -58,6 +61,7 @@ public class ClassifierControllerTests {
         DocumentTypeView doc1 = new DocumentTypeView();
         doc1.setCode("10");
         doc1.setName("Паспорт иностранного гражданина");
+
         DocumentTypeView doc2 = new DocumentTypeView();
         doc2.setCode("21");
         doc2.setName("Паспорт гражданина Российской Федерации");

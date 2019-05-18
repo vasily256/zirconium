@@ -34,6 +34,7 @@ public class OfficeControllerTests {
     private OfficeView office3;
 
     private List<OfficeView> expectedList;
+
     private OfficeView filterPattern1;
     private OfficeView filterPattern2;
 

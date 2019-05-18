@@ -34,12 +34,12 @@ public class OfficeMapper implements Mapper<Office, OfficeView> {
         fullMapperFacade = mapperFactory1.getMapperFacade();
 
         mapperFactory2
-            .classMap(Office.class, OfficeView.class)
-            .exclude("orgId")
-            .exclude("address")
-            .exclude("phones")
-            .byDefault()
-            .register();
+                .classMap(Office.class, OfficeView.class)
+                .exclude("orgId")
+                .exclude("address")
+                .exclude("phones")
+                .byDefault()
+                .register();
 
         shortMapperFacade = mapperFactory2.getMapperFacade();
     }
