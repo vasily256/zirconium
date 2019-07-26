@@ -1,9 +1,17 @@
 package com.bellintegrator.zirconium.dao.impl;
 
-import com.bellintegrator.zirconium.dao.*;
+import com.bellintegrator.zirconium.dao.ContentDao;
+import com.bellintegrator.zirconium.dao.CountryRepository;
+import com.bellintegrator.zirconium.dao.DocumentTypeRepository;
+import com.bellintegrator.zirconium.dao.OfficeRepository;
+import com.bellintegrator.zirconium.dao.UserRepository;
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
-import com.bellintegrator.zirconium.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.bellintegrator.zirconium.model.Country;
+import com.bellintegrator.zirconium.model.Document;
+import com.bellintegrator.zirconium.model.DocumentType;
+import com.bellintegrator.zirconium.model.Phone;
+import com.bellintegrator.zirconium.model.User;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,25 +23,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
+@AllArgsConstructor
 public class UserDao implements ContentDao<User> {
     private final UserRepository userRepository;
     private final OfficeRepository officeRepository;
     private final DocumentTypeRepository documentTypeRepository;
     private final CountryRepository countryRepository;
     private final EntityManager entityManager;
-
-    @Autowired
-    public UserDao(UserRepository userRepository,
-                   OfficeRepository officeRepository,
-                   DocumentTypeRepository documentTypeRepository,
-                   CountryRepository countryRepository,
-                   EntityManager entityManager) {
-        this.userRepository = userRepository;
-        this.officeRepository = officeRepository;
-        this.documentTypeRepository = documentTypeRepository;
-        this.countryRepository = countryRepository;
-        this.entityManager = entityManager;
-    }
 
     @Override
     public List<User> findAll(User user) {

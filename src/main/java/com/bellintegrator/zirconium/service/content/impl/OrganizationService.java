@@ -5,7 +5,7 @@ import com.bellintegrator.zirconium.model.Organization;
 import com.bellintegrator.zirconium.model.mapper.Mapper;
 import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OrganizationView;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,18 +16,11 @@ import java.util.List;
  * Сервис для работы с объектами организаций
  */
 @Service
+@AllArgsConstructor
 public class OrganizationService implements ContentService<OrganizationView> {
 
     private final ContentDao<Organization> dao;
     private final Mapper<Organization, OrganizationView> mapper;
-
-    @Autowired
-    public OrganizationService(ContentDao<Organization> dao,
-                               Mapper<Organization, OrganizationView> mapper) {
-
-        this.dao = dao;
-        this.mapper = mapper;
-    }
 
     /**
      * {@inheritDoc}

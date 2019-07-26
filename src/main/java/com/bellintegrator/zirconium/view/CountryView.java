@@ -7,7 +7,9 @@ import lombok.Setter;
 /**
  * Страна мира
  */
-@NoArgsConstructor @Setter @Getter
+@NoArgsConstructor
+@Setter
+@Getter
 public class CountryView {
     private String code;
     private String name;

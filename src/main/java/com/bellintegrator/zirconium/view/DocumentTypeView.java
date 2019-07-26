@@ -7,7 +7,9 @@ import lombok.Setter;
 /**
  * Вид документа
  */
-@NoArgsConstructor @Setter @Getter
+@NoArgsConstructor
+@Setter
+@Getter
 public class DocumentTypeView {
     private String code;
     private String name;

@@ -1,32 +1,26 @@
 package com.bellintegrator.zirconium.service.content.impl;
 
+import com.bellintegrator.zirconium.dao.ContentDao;
 import com.bellintegrator.zirconium.model.Office;
 import com.bellintegrator.zirconium.model.mapper.Mapper;
-import com.bellintegrator.zirconium.dao.ContentDao;
 import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.OfficeView;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Сервис для работы с объектами офисов
  */
 @Service("office")
+@AllArgsConstructor
 public class OfficeService implements ContentService<OfficeView> {
 
     private final ContentDao<Office> dao;
     private final Mapper<Office, OfficeView> mapper;
-
-    @Autowired
-    public OfficeService(ContentDao<Office> dao,
-                         Mapper<Office, OfficeView> mapper) {
-
-        this.dao = dao;
-        this.mapper = mapper;
-    }
 
     /**
      * {@inheritDoc}

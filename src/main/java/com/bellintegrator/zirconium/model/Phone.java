@@ -1,8 +1,18 @@
 package com.bellintegrator.zirconium.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Version;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +20,9 @@ import java.util.Set;
  * Номер телефона
  */
 @Entity
-@NoArgsConstructor @Setter @Getter
+@NoArgsConstructor
+@Setter
+@Getter
 public class Phone {
 
     @Id

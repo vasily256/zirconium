@@ -1,18 +1,24 @@
 package com.bellintegrator.zirconium.dao.impl;
 
-import com.bellintegrator.zirconium.model.*;
+import com.bellintegrator.zirconium.model.Country;
+import com.bellintegrator.zirconium.model.Document;
+import com.bellintegrator.zirconium.model.DocumentType;
+import com.bellintegrator.zirconium.model.User;
+import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 public class UserSpecification implements Specification<User> {
     private final User user;
-
-    public UserSpecification(User user) {
-        this.user = user;
-    }
 
     @Override
     public Predicate toPredicate(Root<User> root,

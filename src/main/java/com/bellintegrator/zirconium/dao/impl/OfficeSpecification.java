@@ -2,20 +2,23 @@ package com.bellintegrator.zirconium.dao.impl;
 
 import com.bellintegrator.zirconium.model.Office;
 import com.bellintegrator.zirconium.model.Phone;
+import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 public class OfficeSpecification implements Specification<Office> {
     private final Office office;
-
-    public OfficeSpecification(Office office) {
-        this.office = office;
-    }
 
     @Override
     public Predicate toPredicate(Root<Office> root,

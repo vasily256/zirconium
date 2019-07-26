@@ -13,7 +13,9 @@ import java.util.Set;
 /**
  * Организация
  */
-@NoArgsConstructor @Setter @Getter
+@NoArgsConstructor
+@Setter
+@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrganizationView {
 

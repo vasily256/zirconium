@@ -5,6 +5,7 @@ import com.bellintegrator.zirconium.model.DocumentType;
 import com.bellintegrator.zirconium.model.mapper.Mapper;
 import com.bellintegrator.zirconium.service.classifier.ClassifierService;
 import com.bellintegrator.zirconium.view.DocumentTypeView;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +15,11 @@ import java.util.List;
  * Сервис получения справочника видов документов
  */
 @Service("docs")
+@AllArgsConstructor
 public class DocumentTypeService implements ClassifierService<DocumentTypeView> {
 
     private final ClassifierDao<DocumentType> dao;
     private final Mapper<DocumentType, DocumentTypeView> mapper;
-
-    @Autowired
-    public DocumentTypeService(ClassifierDao<DocumentType> dao,
-                               Mapper<DocumentType, DocumentTypeView> mapper) {
-
-        this.dao = dao;
-        this.mapper = mapper;
-    }
 
     /**
      * {@inheritDoc}

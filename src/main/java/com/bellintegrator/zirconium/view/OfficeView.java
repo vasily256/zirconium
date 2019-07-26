@@ -4,7 +4,9 @@ import com.bellintegrator.zirconium.view.validation.group.ListViews;
 import com.bellintegrator.zirconium.view.validation.group.SaveView;
 import com.bellintegrator.zirconium.view.validation.group.UpdateView;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import java.util.Set;
@@ -12,7 +14,9 @@ import java.util.Set;
 /**
  * Офис
  */
-@NoArgsConstructor @Setter @Getter
+@NoArgsConstructor
+@Setter
+@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OfficeView {
 

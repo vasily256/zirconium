@@ -5,6 +5,7 @@ import com.bellintegrator.zirconium.model.User;
 import com.bellintegrator.zirconium.model.mapper.Mapper;
 import com.bellintegrator.zirconium.service.content.ContentService;
 import com.bellintegrator.zirconium.view.UserView;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +17,11 @@ import java.util.List;
  * Сервис для работы с объектами пользователей
  */
 @Service
+@AllArgsConstructor
 public class UserService implements ContentService<UserView> {
 
     private final ContentDao<User> dao;
     private final Mapper<User, UserView> mapper;
-
-    @Autowired
-    public UserService(ContentDao<User> dao,
-                       Mapper<User, UserView> mapper) {
-
-        this.dao = dao;
-        this.mapper = mapper;
-    }
 
     /**
      * {@inheritDoc}

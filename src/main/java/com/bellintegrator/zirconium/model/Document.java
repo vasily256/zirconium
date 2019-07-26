@@ -1,31 +1,38 @@
 package com.bellintegrator.zirconium.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Version;
 import java.time.LocalDate;
 
 /**
  * Документ
  */
 @Entity
-@NoArgsConstructor @Setter @Getter
+@NoArgsConstructor
+@Setter
+@Getter
 public class Document {
 
     @Id
-    @Column(name = "user_id")
     private Long userId;
 
     @Version
     private Integer version;
 
-    @Column(name = "doc_number")
     private String docNumber;
 
-    @Column(name = "doc_date")
     private LocalDate docDate;
 
-    @Column(name = "is_identified")
     private Boolean isIdentified;
 
     @OneToOne(fetch = FetchType.LAZY)

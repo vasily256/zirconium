@@ -5,7 +5,7 @@ import com.bellintegrator.zirconium.dao.OrganizationRepository;
 import com.bellintegrator.zirconium.exception.EntityNotFoundException;
 import com.bellintegrator.zirconium.model.Organization;
 import com.bellintegrator.zirconium.model.Phone;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,15 +17,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
+@AllArgsConstructor
 public class OrganizationDao implements ContentDao<Organization> {
     private final OrganizationRepository orgRepository;
     private final EntityManager entityManager;
-
-    @Autowired
-    public OrganizationDao(OrganizationRepository orgRepository, EntityManager entityManager) {
-        this.orgRepository = orgRepository;
-        this.entityManager = entityManager;
-    }
 
     @Override
     public List<Organization> findAll(Organization org) {

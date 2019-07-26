@@ -4,14 +4,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Version;
 import java.util.Set;
 
 /**
  * Офис
  */
 @Entity
-@NoArgsConstructor @Setter @Getter
+@NoArgsConstructor
+@Setter
+@Getter
 public class Office {
 
     @Id
@@ -22,7 +34,6 @@ public class Office {
     @Version
     private Integer version;
 
-    @Column(name = "org_id")
     private Long orgId;
 
     private String name;
@@ -42,7 +53,6 @@ public class Office {
     )
     private Set<Phone> phones;
 
-    @Column(name = "is_active")
     private Boolean isActive;
 
 
